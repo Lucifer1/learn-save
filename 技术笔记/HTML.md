@@ -69,7 +69,7 @@
       HTML 4.01： <meta http-equiv="content-type" content="text/html; charset=UTF-8">
       HTML5： <meta charset="UTF-8">
       ```
-    * http-equiv一般设置的都是与http请求头相关的信息，设置的值会关联到http头部。也就是说浏览器在请求服务器获取html的时候，**服务器会将html中设置的meta放在响应头中返回给浏览器**。常见的类型比如content-type, expires, refresh, set-cookie, window-target, charset， pragma等等。
+    * http-equiv一般设置的都是与http头部相关的信息，设置的值会关联到http头部。也就是说浏览器在请求服务器获取html的时候，**服务器会将html中设置的meta放在响应头中返回给浏览器**。常见的类型比如content-type, expires, refresh, set-cookie, window-target, charset， pragma等等。
     * 具有http-equiv属性的meta，相当于http头的作用，它可以向浏览器传回一些有用信息，meta标签的http-equiv属性语法格式是：
 
       ```

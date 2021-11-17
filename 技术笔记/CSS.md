@@ -211,10 +211,10 @@
           1.   如果定义了完整的DOCTYPE，那么就会触发标准模式，那么在浏览器中都会默认使用标准盒模型
           2.   如果没有定义DOCTYPE，那么在IE9之前的浏览器(IE6,IE7,IE8)，就会触发混杂模式，也成为怪异模式，使用怪异盒模型
           3.   其他浏览器默认使用标准模式
-          4.   在IE8+的浏览器当中，可以通过box-sizing来设置标准和怪异，
+          4.   在IE8+的浏览器当中，可以通过**box-sizing**来设置标准和怪异，
           5.   content-box为标准盒模型，默认值
           6.   border-box为怪异盒模型
-          7.   padding-box，这个模式把padding算入width，不算border
+          7.   padding-box，这个模式把padding算入width，不算border，**找不到对应的定义**
      4.   标准模式与混杂模式
           1.   严格模式：又称标准模式，是指浏览器按照 W3C 标准解析代码。
           2.   混杂模式：又称怪异模式或兼容模式，是指浏览器用自己的方式解析代码。
@@ -283,7 +283,7 @@
     3. 默认不继承的("Inherited: No") 的属性：
        1. **所有元素默认不继承：all、display、overflow、contain**
        2. **文本属性默认不继承：vertical-align、text-decoration、text-overflow**
-       3. **盒子属性默认不继承：width、height、padding、margin、border、min-width、min-height、max-width、max-height**
+       3. **盒子属性默认不继承：width、height、padding、margin、border、min-width、min-height、max-width、max-height**， 正常流中，子元素设置了height时，块级子元素width继承父元素属性，行内元素不继承父元素宽度
        4. **背景属性默认不继承：background、background-color、background-image、background-repeat、background-position、background-attachment**
        5. **定位属性默认不继承：float、clear、position、top、right、bottom、left、z-index**
        6. 内容属性默认不继承：content、counter-reset、counter-increment
@@ -362,7 +362,7 @@
             border: 1px solid currentColor;
         }
         ```
-34. 配色：RGBA、HSLA(色相(hue)-饱和度(saturation)-亮度(lightness))
+34. 配色：RGBA、HSLA(色相(hue)-饱和度(saturation)-亮度(lightness))，HEX(就是我们常用的#ffffff)
 35. 媒体查询@media：
     1.  设置改css对什么设备生效
 
@@ -539,7 +539,7 @@
               postcss: {
                 plugins: [
                   require('postcss-pxtorem')({
-                    rootValue: 192,
+                    rootValue: 16,   //结果为：设计稿元素尺寸/16，比如元素宽320px,最终页面会换算成 20rem
                     minPixelValue: 2,
                     propList: ['*'],
                   })
@@ -594,7 +594,39 @@
       ```
       首先，autoprefixer这里也可以加单引号，没区别，plugins下边单引号的属性就是你要使用的插件名称，postcss有200多个插件，想用哪个，引哪个。然后各个插件下的具体配置去查对应的文档
 
-53.
+53. display与visibility、opacity的区别
+    * display: none
+        - DOM 结构：浏览器不会渲染 display 属性为 none 的元素，不占据空间；
+        - 事件监听：无法进行 DOM 事件监听；
+        - 性能：动态改变此属性时会引起重排，性能较差；
+        - 继承：不会被子元素继承，毕竟子类也不会被渲染；
+        - transition：transition 不支持 display。
+    * visibility: hidden
+        - DOM 结构：元素被隐藏，但是会被渲染不会消失，占据空间；
+        - 事件监听：无法进行 DOM 事件监听；
+        - 性 能：动态改变此属性时会引起重绘，性能较高；
+        - 继 承：会被子元素继承，子元素可以通过设置 visibility: visible; 来取消隐藏；
+        - transition：transition 支持 visibility。
+    * opacity: 0
+        - DOM 结构：透明度为 100%，元素隐藏，占据空间；
+        - 事件监听：可以进行 DOM 事件监听；
+        - 性 能：提升为合成层，不会触发重绘，性能较高；
+        - 继 承：会被子元素继承,且，子元素并不能通过 opacity: 1 来取消隐藏；
+        - transition：transition 支持 opacity。
 
+54. CSS优化
+    1.  首推的是合并css文件，如果页面加载10个css文件，每个文件1k，那么也要比只加载一个100k的css文件慢。
+    2.  减少css嵌套，最好不要套三层以上。
+    3.  不要在ID选择器前面进行嵌套，ID本来就是唯一的而且人家权值那么大，嵌套完全是浪费性能。
+    4.  建立公共样式类，把相同样式提取出来作为公共类使用，比如我们常用的清除浮动等。
+    5.  减少通配符*或者类似[hidden="true"]这类选择器的使用，挨个查找所有...这性能能好吗？当然重置样式这些必须 的东西是不能少的。
+    6.  巧妙运用css的继承机制，如果父节点定义了，子节点就无需定义。
+    7.  拆分出公共css文件，对于比较大的项目我们可以将大部分页面的公共结构的样式提取出来放到单独css文件里， 这样一次下载后就放到缓存里，当然这种做法会增加请求，具体做法应以实际情况而定。
+    8.  不用css表达式，表达式只是让你的代码显得更加炫酷，但是他对性能的浪费可能是超乎你的想象的。
+    9.  少用css rest，可能你会觉得重置样式是规范，但是其实其中有很多的操作是不必要不友好的，有需求有兴趣的 朋友可以选择normolize.css
+    10. cssSprite，合成所有icon图片，用宽高加上bacgroud-position的背景图方式显现出我们要的icon图，这是一种 十分实用的技巧，极大减少了http请求。
+    11. 当然我们还需要一些善后工作，CSS压缩(这里提供一个在线压缩 YUI Compressor ，当然你会用其他工具来压缩是十 分好的)，
+    12. GZIP压缩，Gzip是一种流行的文件压缩算法，详细做法可以谷歌或者百度。
+    13. 减少使用@import
 
 

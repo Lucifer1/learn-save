@@ -136,12 +136,12 @@
 
       while(true) {
         if(L === null){    //找到最顶层
-              return false;
-          }
-          if(L === RP){       //严格相等
-              return true;
-          }
-          L = L.__proto__;  //没找到继续向上一层原型链查找
+            return false;
+        }
+        if(L === RP){       //严格相等
+            return true;
+        }
+        L = L.__proto__;  //没找到继续向上一层原型链查找
       }
     }
     ```
@@ -505,7 +505,7 @@
 
 38. [JS中的四种循环](https://juejin.cn/post/6844903513336610823)
     1.  for
-    2.  for-in： for-in 并不适合用来遍历 Array 中的元素，其更适合遍历对象中的属性，这也是其被创造出来的初衷。for-in 不仅仅遍历 array 自身的属性，其还遍历 array 原型链上的所有可枚举的属性
+    2.  for-in： for-in 并不适合用来遍历 Array 中的元素，其更适合遍历对象中的属性，这也是其被创造出来的初衷。**for-in 不仅仅遍历 array 自身的属性，其还遍历 array 原型链上的所有可枚举的属性**
 
             ```
             Array.prototype.fatherName = "Father";
@@ -571,11 +571,46 @@
      3.   总结：
           1.   nodelist与collection都分为动态和静态的，只不过collection只包含元素，nodelist包含所有节点类型，包括text啥的
           2.   不同的方法获取到的可能是nodelist也可能是collection
+     4.   要创建新的HTML元素(节点)需要先创建一个元素，然后在已存在的元素中添加它。
+
+        * createElement()
+        * appendChild() 方法代码：
+
+                var para = document.createElement("p");
+                var node = document.createTextNode("这是一个新的段落。");
+                para.appendChild(node);
+        * insertBefore() 方法代码：
+
+                var para = document.createElement("p");
+                var node = document.createTextNode("这是一个新的段落。");
+                para.appendChild(node);
+
+                var element = document.getElementById("div1");
+                var child = document.getElementById("p1");
+                element.insertBefore(para, child);
+
+        * removeChild() 方法代码：要移除一个元素，你需要知道该元素的父元素。
+
+                var parent = document.getElementById("div1");
+                var child = document.getElementById("p1");
+                parent.removeChild(child);
+
+        * replaceChild() 方法代码：
+
+                var para = document.createElement("p");
+                var node = document.createTextNode("这是一个新的段落。");
+                para.appendChild(node);
+
+                var parent = document.getElementById("div1");
+                var child = document.getElementById("p1");
+                parent.replaceChild(para, child);
 42.  [交换两个元素位置](https://www.jianshu.com/p/8b6ead8beb3a)
 43.  Array
      1.   Array.includes(value):返回一个布尔值，value是否在数组中。
-     2.   Array.indexOf(value):如果value在数组中，则返回value在数组中的下标；否则返回-1
-     3.   Array.from() 方法从一个类似数组或可迭代对象创建一个新的，浅拷贝的数组实例。
+     2.   Array.isArray():判断是否为数组
+     3.   Array.fill():填充数组
+     4.   Array.indexOf(value):如果value在数组中，则返回value在数组中的下标；否则返回-1
+     5.   Array.from() 方法从一个类似数组或可迭代对象创建一个新的，浅拷贝的数组实例。
 
             ```
             console.log(Array.from('foo'));
@@ -592,3 +627,261 @@
 45.  [手写bind](https://zhuanlan.zhihu.com/p/163254710)
 46.  模拟表单提交，给post设置header
      1.   set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8')
+47.  闭包
+48.  this的指向
+   1. 普通函数的this：[答案](https://segmentfault.com/a/1190000011194676)
+   2. 如果上边答案里边的箭头函数没看懂，看这篇[答案](https://blog.csdn.net/weixin_42519137/article/details/88053339)
+49. 手写new、call、apply、深拷贝、instancecof
+   3. new原理(new 底层做了什么):
+
+        ```
+        function myNew(fn, ...arg) {
+          let newObj = {}
+          newObj.__proto__ = fn.prototype
+          let res = fn.apply(newObj, arg)
+          return res instanceof Object ? res : newObj
+        }
+        ```
+
+      1. 创建一个空对象
+      2. 将函数的原型prototype赋值给对象的原型__proto__（**这里有一个知识点，对象或者变量只有__proto__而没有prototype，而函数同时拥有__proto__和prototype**）
+
+          ```
+          function Cat() {
+            this.name = 'cat'
+          }
+          Cat.prototype.eat = () => {
+            console.log('eat')
+          }
+
+          let cat = new Cat()
+          cat.eat()
+          console.log(cat.__proto__);   // Cat { eat: [Function (anonymous)] }
+          console.log(cat.prototype);   // undefined
+          console.log(Cat.prototype);   // Cat { eat: [Function (anonymous)] }
+          console.log(Cat.__proto__);   // [Function (anonymous)]
+          ```
+
+      3. 执行构造函数，并且改变this的指向
+      4. 确保返回的是对象（**最后一句话的意思是，判断res是否是对象，如果是的话返回res，不是的话返回一个空对象**）
+
+    1. apply原理：apply的作用就是改变函数的this对象，fn.apply(newObj, arg)这句话的意识就是将fn这个函数里边的this的值变为newObj。
+
+        ```
+        Function.prototype.myApply = function (context, arr) {
+          context = context || window
+          context.fn = this
+          let result = context.fn(...arr)
+          delete context.fn
+          return result
+        }
+        ```
+
+       1. 确定拿到对象context，如果对象context为空，则将window赋值给context
+       2. 创建context对象的fn属性，并将this赋值给fn（**这句话的意思可以参考过上边那个，fn.apply(newObj, arg)，fn.apply，那么apply函数里边的this就是这个fn，所以这句话其实就是拿到执行apply函数的那个函数**）
+       3. 用参数arr来执行函数context.fn，得到结果，赋值给result
+       4. 删除context的fn属性。
+       5. 返回结果
+
+    2. call原理：call的作用和apply一样，只不过apply第二个参数是一个数组，用来接收所有参数，call是允许有第二个第三个第四个。。。参数的，他两底层的区别就是拿到剩余参数的方法不一样，其他的一样
+
+        ```
+        Function.prototype.myCall = function (context) {
+          context = context || window
+          context.fn = this
+          let args = [...arguments].slice(1)
+          let result = context.fn(...args)
+          delete context.fn
+          return result
+        }
+        ```
+
+       1. 区别在于第4行，args的获取，（**每个函数都默认有一个auguments变量，他包含了该函数的所有参数**），这句话的意思就是解构arguments形成一个数组，并且将这个数组除第一个参数（第一个参数是上边的context，所以不要它）以外的其他参数赋值给args。
+
+    3. 浅拷贝与深拷贝
+    4.
+       1. 浅拷贝的时候如果数据是基本数据类型，那么就如同直接赋值，会拷贝其本身，如果除了基本数据类型之外还有一层对象，那么浅拷贝就只能拷贝其引用，对象的改变会反应到拷贝对象上；但是深拷贝就会拷贝多层，即使是嵌套了对象，也会都拷贝出来。
+       2. 实现深拷贝最简单的代码
+
+          ```
+          let obj = {.........}  // 假设这个对象有很多层嵌套
+          let obj2 = JSON.parse(JSON.stringfy(obj))
+          ```
+          ```
+          var obj1 = { body: { a: 10 } };
+          var obj2 = JSON.parse(JSON.stringify(obj1));
+          obj2.body.a = 20;
+          console.log(obj1);
+          // { body: { a: 10 } } <-- 沒被改到，如果是浅拷贝，这个也会变为20
+          console.log(obj2);
+          // { body: { a: 20 } }
+          console.log(obj1 === obj2);
+          // false
+          console.log(obj1.body === obj2.body);
+          // false
+          ```
+
+          **解释:** 将obj对象转换成string对象
+
+    1. instanceof
+
+          ```
+          function myInstanceOf(L, R) {
+            if(L === null) {
+              return false
+            }
+            let baseType = ['String', 'Number', 'Boolean', 'undefined', 'symbol']
+            if(baseType.includes(typeof L)) return false
+
+            let RPro = R.prototype
+            L = L.__proto__
+            while(true) {
+              if(L === null)  return false
+              if(L === RPro)  return true
+              L = L.__proto__
+            }
+          }
+          ```
+
+50. 宏任务与微任务，**这个必须弄懂** [网址](https://mp.weixin.qq.com/s/9Xk-HBQFaIEpyH8FqxBi6g)
+51. 跨域问题，[网址](https://blog.csdn.net/lareinalove/article/details/84107476)
+   4. 同源策略：简单来讲同源策略就是浏览器为了保证用户信息的安全，防止恶意的网站窃取数据，禁止不同域之间的JS进行交互。对于浏览器而言只要域名、协议、端口其中一个不同就会引发同源策略，从而限制他们之间如下的交互行为：
+      1. Cookie、LocalStorage和IndexDB无法读取；
+      2. DOM无法获得；
+      3. AJAX请求不能发送。
+   5. 跨域的严格一点的定义是：只要协议，域名，端口有任何一个的不同，就被当作是跨域。
+   6. 为什么浏览器要限制跨域访问?原因就是安全问题：如果一个网页可以随意地访问另外一个网站的资源，那么就有可能在客户完全不知情的情况下出现安全问题。比如下面的操作就有安全问题：
+      1. 用户访问www.mybank.com，登陆并进行网银操作，这时cookie啥的都生成并存放在浏览器；
+      2. 用户突然想起件事，并迷迷糊糊的访问了一个邪恶的网站www.xiee.com；
+      3. 这时该网站就可以在它的页面中，拿到银行的cookie，比如用户名，登陆token等，然后发起对www.mybank.com的操作；
+      4. 如果这时浏览器不予限制，并且银行也没有做响应的安全处理的话，那么用户的信息有可能就这么泄露了。
+   7. **如何解决跨域**
+      1. 跨域资源共享（CORS），简单介绍，详细的看[这个](https://www.ruanyifeng.com/blog/2016/04/cors.html)：
+         1. CORS（Cross-Origin Resource Sharing）跨域资源共享，定义了必须在访问跨域资源时，浏览器与服务器应该如何沟通。CORS背后的基本思想就是使用自定义的HTTP头部让浏览器与服务器进行沟通，从而决定请求或响应是应该成功还是失败。服务器端对于CORS的支持，主要就是通过设置Access-Control-Allow-Origin来进行的。如果浏览器检测到相应的设置，就可以允许Ajax进行跨域的访问。
+
+            ```
+            Access-Control-Allow-Origin:*   // 设置允许访问的Origin，*代表所有Origin都允许访问，Origin字段用来说明，本次请求来自哪个源（协议 + 域名 + 端口）
+            Access-Control-Allow-Methods:GET,POST   // 设置允许跨域的方法，这里设置了get和post，除了设置的方法，其他方法都受到同源策略的限制。
+            Access-Control-Allow-Headers:x-requested-with,content-type  // 设置请求头
+            Access-Control-Allow-Credentials: true    // 是否允许携带cookie
+            ```
+
+            **解释:** 这些字段都是由后台来进行设置的，和前端无关，但是前端要知道这个事情，就是让后台在相应头里边加上上边的字段来实现跨域，唯一一个和前端有关系的字段就是第四个cookie那个，前边这边需要在ajax请求里边加上withCredetials = true这句话。
+
+      2. jsonp，网址上写了
+      3. cors与jsonp对比：CORS与JSONP相比，无疑更为先进、方便和可靠。
+         1. JSONP只能实现GET请求，而CORS支持所有类型的HTTP请求；
+         2. 使用CORS，开发者可以使用普通的XMLHttpRequest发起请求和获得说句，比起JSONP有更好的错误处理；
+         3. JSONP主要被老的浏览器支持，它们往往不支持CORS，而绝大多数现代浏览器都已经支持了CORS；
+         4. **总结来说jsonp可以更好的兼容老版本，但是可以使用的方法有限，而cors支持所有类型，但是只有现代的能用。**
+
+      4. 掌握这两个就行了，一般只问第一个，把一个掌握好
+
+52. 双等号与三等号的区别：
+   8. == 用于比较、判断两者相等，比较时可自动换数据类型
+   9. === 用于（严格）比较、判断两者（严格）相等，不会进行自动转换，要求进行比较的操作数必须类型一致，不一致时返回flase。
+   10. 简单来说，一个会自动换类型再比较，一个不换直接比较
+
+53. typeof instanceOf Object.prototype.toString类型判断
+   11. typeof运算符返回一个用来表示表达式的数据类型的字符串。typeof一般返回以下几个字符串："number"， "string"，"boolean"，"object"，"function"，"undefined"。对于Array，Null等特殊对象使用typeof一律返回object，这正是typeof的局限性。
+   12. instanceof用来检测某个对象是不是另一个对象的实例。它会更具原型链向上检测
+
+        ```
+        class Animal {}
+        class Cat extend Animal {}
+        let cat = new Cat()
+        console.log(cat instanceof Animal)  // true
+        console.log(cat instanceof Object)  // true，因为所有类都是Object的子类
+        ```
+
+    1. Object.prototype.toString.call()，这个方法可以判断**所有**对象的类型，包括null和undefined
+
+        ```
+        let a = ''
+        let b = 0
+        let c = true
+        let d = []
+        let e = {}
+        let f = function() {}
+        let g = undefined
+        let h = null
+
+        console.log(Object.prototype.toString.call(a))  // [object String]
+        console.log(Object.prototype.toString.call(b))  // [object Number]
+        console.log(Object.prototype.toString.call(c))  // [object Boolean]
+        console.log(Object.prototype.toString.call(d))  // [object Array]
+        console.log(Object.prototype.toString.call(e))  // [object Object]
+        console.log(Object.prototype.toString.call(f))  // [object Function]
+        console.log(Object.prototype.toString.call(g))  // [object Undefined]
+        console.log(Object.prototype.toString.call(h))  // [object Null]
+        ```
+
+54. 事件委托[网址](https://www.cnblogs.com/wp-js/p/7609539.html)
+55. 图片懒加载[网址](https://blog.csdn.net/w1418899532/article/details/90515969)
+56. 静态nodelist 与 动态nodelist [地址](https://www.cnblogs.com/floaty/p/5812089.html)
+
+   * 动态的nodelist，程序员对于dom的操作会动态的反应在nodelist当中，比如获取ul中的所以li，返回一个动态的nodelist，当我们想ul中添加一个li，那么此时nodelist的长度也会动态的+1，但是静态的就不会
+   * 但是动态的nodelist的性能比静态的要好，所以说要考虑情况去进行使用
+      - 原因：因为动态的nodelist在创建是并不需要预先获取所有的信息，而静态的在最开始就需要获取到所有信息并封装好，所以动态的快一点
+
+57. nodelist与array的区别、nodelist与collection的区别[地址](https://www.jianshu.com/p/f6ff5ebe45fd)
+58. getElementByTagName()与querySelectorAll()的区别，[地址](https://blog.csdn.net/weixin_34111819/article/details/89063268?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param)
+    * getElementByTagName()和getElementByClassName()返回的是一个动态的nodelist
+    * querySelectorAll()返回的是一个静态的nodelist
+
+59. js异步编程的几种方式[地址](http://www.ruanyifeng.com/blog/2012/12/asynchronous%EF%BC%BFjavascript.html)
+60. null和undefined的区别
+    1.  null表示"没有对象"，即该处不应该有值
+    2.  undefined表示"缺少值"，就是此处应该有一个值，但是还没有定义
+    3.  [详细可以看看这个](https://www.ruanyifeng.com/blog/2014/03/undefined-vs-null.html)
+61. 获取网页中的各种数据，**基本记不住，加油**
+    * window.innerheight 返回窗口的文档显示区的高度。 **背**
+    * window.innerwidth 返回窗口的文档显示区的宽度。  **背**
+    * outerWidth 和 outerHeight 属性获取加上工具条与滚动条窗口的宽度与高度。  **尽量**
+    * 事件对象event中  **尽量**
+        - clientX、clientY：点击位置距离当前body可视区域的x，y坐标
+        - pageX、pageY：对于整个页面来说，包括了被卷去的body部分的长度
+        - screenX、screenY：点击位置距离当前电脑屏幕的x，y坐标
+        - offsetX、offsetY：相对于带有定位的父盒子的x，y坐标
+            + offsetX，offsetY这是实验中的功能,不推荐使用文本应该说的是offsetLeft，offsetTop
+        - x、y：和screenX、screenY一样
+    * document.body.clientHeight：是body的height  **背**
+    * document.body.clientWidth：是body的width  **背**
+    * offsetTop：元素到offsetParent顶部的距离，例如div.offsetTop  **尽量**
+    * offsetParent：距离元素最近的一个具有定位的祖宗元素（relative，absolute，fixed），若祖宗都不符合条件，offsetParent为body。  **尽量**
+    * document.body.scrollTop：网页被卷去的高
+    * document.body.scrollLeft：网页被卷去的左
+    * window.screen.height：屏幕辨别率的高  **背**
+    * window.screen.width：屏幕辨别率的宽  **背**
+
+62. dom操作：各种dom操作，基本的几个，高级程序设计里边应该让你看了，记住最基础的就能，难的就不要了，**如果选择元素是一定要回的，什么getElementById、getElementBy.....有好多by，这几个查一查记下来，就是按id选择元素，按类型选择元素，还有querySelector()和querySelestorAll()这两个方法也要知道**
+    * getAttribute：获取某一个属性的值；
+    * setAttribute：建立一个属性，并同时给属性捆绑一个值；
+    * createAttribute：仅建立一个属性；
+    * removeAttribute：删除一个属性；
+
+
+63. children与childNodes的区别[网址](https://blog.csdn.net/xx_xiaoxinxiansen/article/details/76100131)：
+    1.  children：返回父元素所有的直系子节点的集合，注意，children只返回HTML元素节点，不包括文本节点和属性节点。
+    2.  childNodes：返回父元素所有的直系子节点的集合，注意，与children不同的是，childNodes会返回HTML元素节点，属性节点，文本节点。
+64. 柯里化(**可以看完所有面经再看，很少考**)
+65. Object.defineProperty 注意事项，这个与vue的双向绑定实现相关，可以后边再看[网址](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
+    * 这个方法可以精准的修改对象的属性
+    * 关于对象属性的描述，有两种描述符
+        - 数据描述符
+        - 存取描述符
+        - **关于属性的描述只能使用二者之一，不能同时使用，使用就会报错**
+    * 两种描述符都是对象，包括以下键值
+        - 公共属性：
+            + configurable：只有该值为true时，该属性的描述符才允许改变，属性才允许被删除，默认为false
+            + enumerable：该值为true，属性才会出现在对象的可枚举属性当中，默认为false
+        - 数据描述符键值：
+            + value：可为任意有效的js值，默认为undefined
+            + writable：只有改值为true时，上边的value才允许更改，默认为false
+        - 存取描述符
+            + get和set，默认为undefined
+    * 如果一个描述符不具备上边任意一个键值，则默认为数据描述符
+
+66. documentFragment
+    1.  DocumentFragment 节点不属于文档树，继承的 parentNode 属性总是 null。 当请求把一个 DocumentFragment 节点插入文档树时，插入的不是 DocumentFragment 自身，而是它的所有子孙节点。这使得 DocumentFragment 成了有用的占位符，暂时存放那些一次插入文档的节点。它还有利于实现文档的剪切、复制和粘贴操作，尤其是与 Range 接口一起使用时更是如此。 可以用 Document.createDocumentFragment() 方法创建新的空 DocumentFragment 节点。DocumentFragment 节点不属于文档树，继承的 parentNode 属性总是 null。 **DocumentFragment 节点不属于DOM树，因此它的变化不会引起DOM树的变化；**
+    2.  DOM树的操作会引起回流，那我们可以将DocumentFragment作为一个暂时的DOM节点存储器，当我们在DocumentFragment 修改完成时，我们就可以将存储DOM节点的DocumentFragment一次性加入DOM树，从而减少回流次数，达到性能优化的目的。
