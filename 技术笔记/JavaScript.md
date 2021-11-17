@@ -398,7 +398,7 @@
     2.  箭头函数的this和它在定义时外层的this是一样的，如果外层的this变了，箭头函数的this也会变，但是不能直接更改箭头函数this的指向
 26. 跨域与跨站：**跨域决定的是能不能请求资源，跨站决定的是请求能不能带上cookie**
     1.  同源策略作为浏览器的安全基石，其「同源」判断是比较严格的，相对而言，Cookie中的「同站」判断就比较宽松：只要两个 URL 的 eTLD+1 相同即可，不需要考虑协议和端口。其中，eTLD 表示有效顶级域名，注册于 Mozilla 维护的公共后缀列表（Public Suffix List）中，例如，.com、.co.uk、.github.io 等。eTLD+1 则表示，有效顶级域名+二级域名，例如 taobao.com 等。
-    2.  跨站：**Cookie与此息息相关，Cookie实际上遵守的是“同站”策略**
+    2.  [跨站](https://juejin.cn/post/6926731819903631368)：**Cookie与此息息相关，Cookie实际上遵守的是“同站”策略**
 27. 在 JavaScript 中，true && expression 总是会返回 expression, 而 false && expression 总是会返回 false。
 28. __proto__ ，绝大部分浏览器都支持这个非标准的方法访问原型，然而它并不存在于 Person.prototype 中，实际上，它是来自于 Object.prototype ，与其说是一个属性，不如说是一个 getter/setter，当使用 obj.__proto__ 时，可以理解成返回了 Object.getPrototypeOf(obj)。
 
@@ -882,6 +882,6 @@
             + get和set，默认为undefined
     * 如果一个描述符不具备上边任意一个键值，则默认为数据描述符
 
-66. documentFragment
+66. [documentFragment](https://www.cnblogs.com/echolun/p/10098752.html)
     1.  DocumentFragment 节点不属于文档树，继承的 parentNode 属性总是 null。 当请求把一个 DocumentFragment 节点插入文档树时，插入的不是 DocumentFragment 自身，而是它的所有子孙节点。这使得 DocumentFragment 成了有用的占位符，暂时存放那些一次插入文档的节点。它还有利于实现文档的剪切、复制和粘贴操作，尤其是与 Range 接口一起使用时更是如此。 可以用 Document.createDocumentFragment() 方法创建新的空 DocumentFragment 节点。DocumentFragment 节点不属于文档树，继承的 parentNode 属性总是 null。 **DocumentFragment 节点不属于DOM树，因此它的变化不会引起DOM树的变化；**
     2.  DOM树的操作会引起回流，那我们可以将DocumentFragment作为一个暂时的DOM节点存储器，当我们在DocumentFragment 修改完成时，我们就可以将存储DOM节点的DocumentFragment一次性加入DOM树，从而减少回流次数，达到性能优化的目的。

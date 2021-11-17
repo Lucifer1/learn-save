@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+  <ul id="myul">
+    <li class="test" data-src="123">1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+  </ul>
+
+<script>
+
+  // let allLi = document.querySelectorAll('li')
+  // allLi.forEach(item => {
+  //   item.addEventListener('click', (e) => {
+  //     console.log(e);
+  //     console.log(e.target.textContent);
+  //   })
+  // })
+
+  window.onload = function () {
+    let parEl = document.getElementById('myul')
+    parEl.onclick = function (ev) {
+      console.log(ev);
+      ev = ev || window.event
+      let target = ev.target || ev.srcElement
+      console.log(target);
+      if(target.nodeName.toLowerCase() === 'li') {
+        console.log('触发函数');
+      }
+    }
+  }
+
+  // let c = document.getElementById('mycanvas')
+  // let cxt = c.getContext("2d")
+  // cxt.moveTo(10, 10)
+  // cxt.lineTo()
+
+
+
+
+
+</script>
+</body>
+</html>

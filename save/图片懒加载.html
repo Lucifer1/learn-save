@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body style="height: 100px; width: 100px;">
+<img src="" data-src="" alt="">
+<img src="" data-src="" alt="">
+<img src="" data-src="" alt="">
+<img src="" data-src="" alt="">
+<img src="" data-src="" alt="">
+<img src="" data-src="" alt="">
+
+
+<script>
+  imgs = document.querySelectorAll('img')
+  console.log(imgs);
+  window.onscroll = function() {
+    let scrolltop = document.body.scrollTop || document.documentElement.scrollTop
+    let winheight = window.innerHeight
+    for(let i = 0; i < imgs.length; i++) {
+      if(imgs[i].offsetTop < scrolltop + winheight) {
+        imgs[i].src = imgs[i].getAttribute('data-src')
+      }
+    }
+  }
+
+  function throttle(func, wait) {
+    let timer = null
+    return function () {
+      let cxt = this
+      let args = arguments
+      if(!timer) {
+        timer = setTimeout(function () {
+          timer = null
+          func.apply(cxt, args)
+        }, wait)
+      }
+    }
+  }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <p>{{counter}}</p>
+  <div k-text="counter"></div>
+  <div k-test="aaa"></div>
+</div>
+
+
+
+<script src="myVue.js"></script>
+<script>
+  const app = new myVue({
+    el: '#app',
+    data: {
+      obj: {
+        test: 'aaa'
+      },
+      counter: 0,
+      aaa: '<span style="color:red">123456</span>'
+    }
+  })
+
+  setInterval(function () {
+    app.counter++
+  }, 1000)
+</script>
+</body>
+</html>

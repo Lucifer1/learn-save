@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+  <p id="p1">{{ count }}</p>
+  <p >{{ count2 }}</p>
+  <div>{{test}}</div>
+</div>
+
+<script>
+  const app = new Vue({
+    el: '#app',
+    data() {
+      return {
+        count: 0,
+        count2: 0,
+        test: 123
+      }
+    },
+    mounted() {
+      console.log(this)
+      this.count++
+      this.count2++
+      Promise.resolve().then(() => {
+        console.log('Promise');
+        console.log(document.getElementById('p1').innerHTML);
+      })
+      console.log(document.getElementById('p1').innerHTML);
+      this.$nextTick(() => {
+        console.log('nextTick');
+        console.log(document.getElementById('p1').innerHTML);
+      })
+      // this.count++
+    }
+  })
+</script>
+</body>
+</html>
