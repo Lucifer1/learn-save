@@ -284,3 +284,4 @@
         ```
 
 15. vue 在使用路由懒加载时，如果使用了babel，需要添加 syntax-dynamic-import 插件，babel才能正确的解析
+16. 最好所有的数据请求都放在created里边

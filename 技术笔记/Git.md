@@ -359,7 +359,7 @@ $ git log --graph --pretty=oneline --abbrev-commit
         $ git cherry-pick 99daed2
         ```
 
-28. 28. 不同端同步数据
+28. 不同端同步数据
     1.  我在我的电脑上，建了有个github库，在另外一台电脑应该，
     2.  先将自己的公钥加入到github的账户当中
     3.  然后创建一个文件夹，然后git init初始化，将该文件夹可以被git管理
