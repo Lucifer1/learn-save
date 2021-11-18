@@ -628,5 +628,10 @@
     11. 当然我们还需要一些善后工作，CSS压缩(这里提供一个在线压缩 YUI Compressor ，当然你会用其他工具来压缩是十 分好的)，
     12. GZIP压缩，Gzip是一种流行的文件压缩算法，详细做法可以谷歌或者百度。
     13. 减少使用@import
+55. 如何触发bfc
+    1.  float的值不是none。
+    2.  position的值不是static或者relative。
+    3.  display的值是inline-block、table-cell、flex、table-caption或者inline-flex
+    4.  overflow的值不是visible
 
 
