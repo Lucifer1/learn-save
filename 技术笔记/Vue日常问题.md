@@ -285,3 +285,5 @@
 
 15. vue 在使用路由懒加载时，如果使用了babel，需要添加 syntax-dynamic-import 插件，babel才能正确的解析
 16. 最好所有的数据请求都放在created里边
+17. nextTick
+    1.  Vue 会根据当前浏览器环境优先使用原生的 Promise.then 和 MutationObserver，如果都不支持，就会采用 setTimeout 代替，目的是 延迟函数到 DOM 更新后再使用
