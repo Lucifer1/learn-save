@@ -245,12 +245,12 @@
     ```
     经典面试题
     for (var i = 0; i < 5; i++) {
-            setTimeout(function() {
-                console.log(new Date, i);
-            }, 1000);
-        }
+        setTimeout(function() {
+            console.log(new Date, i);
+        }, 1000);
+    }
 
-        console.log(new Date, i);
+    console.log(new Date, i);
 
     // 输出
     Fri Jul 24 2020 19:33:42 GMT+0800 (中国标准时间) 5
@@ -490,8 +490,8 @@
 
         ```
         function trible(num1, num2, num3, num4) {
-        console.log(num1, num2, num3, num4);
-        return num1*num2
+            console.log(num1, num2, num3, num4);
+            return num1*num2
         }
 
         var arr = [1,2]

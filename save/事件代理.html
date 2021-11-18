@@ -26,15 +26,24 @@
 
   window.onload = function () {
     let parEl = document.getElementById('myul')
-    parEl.onclick = function (ev) {
+    parEl.addEventListener('click', function (ev) {
       console.log(ev);
       ev = ev || window.event
       let target = ev.target || ev.srcElement
-      console.log(target);
-      if(target.nodeName.toLowerCase() === 'li') {
+      console.log(target.innerHTML);
+      if (target.nodeName.toLowerCase() === 'li') {
         console.log('触发函数');
       }
-    }
+    })
+    // parEl.onclick = function (ev) {
+    //   console.log(ev);
+    //   ev = ev || window.event
+    //   let target = ev.target || ev.srcElement
+    //   console.log(target.innerHTML);
+    //   if(target.nodeName.toLowerCase() === 'li') {
+    //     console.log('触发函数');
+    //   }
+    // }
   }
 
   // let c = document.getElementById('mycanvas')
