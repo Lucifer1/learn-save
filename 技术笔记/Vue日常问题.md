@@ -287,3 +287,25 @@
 16. 最好所有的数据请求都放在created里边
 17. nextTick
     1.  Vue 会根据当前浏览器环境优先使用原生的 Promise.then 和 MutationObserver，如果都不支持，就会采用 setTimeout 代替，目的是 延迟函数到 DOM 更新后再使用
+18. **使用计算属性，或者说使用某对象的属性时，使用&&先判断数据是否存在，然后再取数据**
+19. 想要在vue的html中使用枚举
+
+        ```
+        enum PRIVILEDGEINDEX {
+        '题目精讲',
+        '知识点讲解',
+        '试卷讲解',
+        '试卷下载',
+        '试卷还原',
+        '错题整理',
+        'VIP标识',
+        'VIP客服',
+        }
+
+        @Component
+        export default class VipIntroductionNew extends Vue {
+            priviledgeIndex: any = PRIVILEDGEINDEX
+        }
+        ```
+
+20.
