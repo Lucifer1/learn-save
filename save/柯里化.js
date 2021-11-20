@@ -1,6 +1,6 @@
 function currying(fn, ...res1) {
   return function(...res2) {
-    fn.apply(null, res1.concat(res2))
+    fn.apply(this, res1.concat(res2))
   }
 }
 
