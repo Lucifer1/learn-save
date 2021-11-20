@@ -253,12 +253,12 @@
 10. computed与watch区别：watch和computed很相似，watch用于观察和监听页面上的vue实例，当然在大部分情况下我们都会使用computed，但如果要在数据变化的同时**进行异步操作或者是比较大的开销**，那么watch为最佳选择。
 11. computed与method区别：method只要调用就会重新执行一次，而computed有缓存，只要依赖的数据没有变化会立即返回之前的计算结果，而不必再次执行函数。
 12. [vue与react的区别](https://www.zhihu.com/question/309891718/answer/1066629375)
-     1.   Vue跟React的最大区别在于数据的reactivity，就是反应式系统上。Vue提供反应式的数据，当数据改动时，界面就会自动更新，而React里面需要调用方法SetState。我把两者分别称为Push-based和Pull-based。所谓Push-based就是说，改动数据之后，数据本身会把这个改动推送出去，告知渲染系统自动进行渲染。在React里面，它是一个Pull的形式，用户要给系统一个明确的信号说明现在需要重新渲染了，这个系统才会重新渲染。两者并没有绝对的优劣之分，更多的也是思维模式和开发习惯的不同。
+     1.   Vue跟React的最大区别在于数据的reactivity，就是反应式系统上。**Vue提供反应式的数据，当数据改动时，界面就会自动更新，而React里面需要调用方法SetState**。我把两者分别称为Push-based和Pull-based。所谓Push-based就是说，改动数据之后，数据本身会把这个改动推送出去，告知渲染系统自动进行渲染。在React里面，它是一个Pull的形式，用户要给系统一个明确的信号说明现在需要重新渲染了，这个系统才会重新渲染。两者并没有绝对的优劣之分，更多的也是思维模式和开发习惯的不同。
 13.  [MVC MVVM MVP](http://www.ruanyifeng.com/blog/2015/02/mvcmvp_mvvm.html)，[第二篇](https://juejin.cn/post/6844903480126078989)
      1.   MVC
-          1.   view层是用户看见的层，用户在这边进行操作，然后将时间发送给controller
+          1.   view层是用户看见的层，用户在这边进行操作，然后将事件发送给controller
           2.   controller在事件触发后执行业务逻辑，然后根据逻辑更改model中的数据
-          3.   view通过观察者模式，事先在model中进行注册，然后观察model，model发生改变，view试图更新
+          3.   view通过观察者模式，事先在model中进行注册，然后观察model，model发生改变，view视图更新
           4.   缺点
                1.   业务逻辑主要集中在controller，这层会变得十分臃肿
                2.   view与controller一般是一一对应的，捆绑起来形成一个组件，二者高度耦合不利于复用

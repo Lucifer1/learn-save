@@ -885,3 +885,18 @@
 66. [documentFragment](https://www.cnblogs.com/echolun/p/10098752.html)
     1.  DocumentFragment 节点不属于文档树，继承的 parentNode 属性总是 null。 当请求把一个 DocumentFragment 节点插入文档树时，插入的不是 DocumentFragment 自身，而是它的所有子孙节点。这使得 DocumentFragment 成了有用的占位符，暂时存放那些一次插入文档的节点。它还有利于实现文档的剪切、复制和粘贴操作，尤其是与 Range 接口一起使用时更是如此。 可以用 Document.createDocumentFragment() 方法创建新的空 DocumentFragment 节点。DocumentFragment 节点不属于文档树，继承的 parentNode 属性总是 null。 **DocumentFragment 节点不属于DOM树，因此它的变化不会引起DOM树的变化；**
     2.  DOM树的操作会引起回流，那我们可以将DocumentFragment作为一个暂时的DOM节点存储器，当我们在DocumentFragment 修改完成时，我们就可以将存储DOM节点的DocumentFragment一次性加入DOM树，从而减少回流次数，达到性能优化的目的。
+67. typeof返回的是小写的字符串类型的类型名，如'object', 'number'等，**typeof的返回值：**
+
+        ```
+        console.log(typeof a);    //'undefined'
+        console.log(typeof(true));  //'boolean'
+        console.log(typeof '123');  //'string'
+        console.log(typeof 123);   //'number'
+        console.log(typeof NaN);   //'number'
+        console.log(typeof null);  //'object'    
+        var obj = new String();
+        console.log(typeof(obj));    //'object'
+        var  fn = function(){};
+        console.log(typeof(fn));  //'function'
+        console.log(typeof(class c{}));  //'function'
+        ```
