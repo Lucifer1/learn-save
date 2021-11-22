@@ -1,4 +1,11 @@
 function deepClone(obj, map = new WeakMap()) {
+  if(typeof obj === 'symbol') return Symbol.for(obj.description)    //处理symbol
+  if(obj instanceof Date) {
+    return new Date(obj.getTime())
+  }
+  if (obj instanceof RegExp) {
+    return new RegExp(obj)
+  }
   if(typeof obj !== 'object' || obj === null) return obj
   let res = Array.isArray(obj) ? [] : {}
   if(map.get(obj)) {
