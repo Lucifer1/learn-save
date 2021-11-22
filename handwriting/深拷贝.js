@@ -40,6 +40,7 @@ const target = {
     return a + b;
   }
 }
+target.target = target;
 
 let zjm = deepClone(target)
 
