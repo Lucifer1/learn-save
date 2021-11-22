@@ -17,3 +17,30 @@ function deepClone(obj, map = new WeakMap()) {
   }
   return res
 }
+
+const target = {
+  field1: 1,
+  field2: undefined,
+  field3: {
+    child: 'child'
+  },
+  field4: [2, 4, 8],
+  empty: null,
+  bool: true,
+  num: 2,
+  str: '2',
+  symbol: Symbol(1),
+  date: new Date(),
+  reg: /\d+/,
+  error: new Error(),
+  func1: () => {
+    console.log('code秘密花园');
+  },
+  func2: function (a, b) {
+    return a + b;
+  }
+}
+
+let zjm = deepClone(target)
+
+console.log(zjm);
