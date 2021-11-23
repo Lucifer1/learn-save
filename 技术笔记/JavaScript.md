@@ -452,7 +452,7 @@
     2. 使用offsetTop、offsetHeight和scrollTop兜底也可
       1. offsetTop：元素到offsetParent顶部的距离
       2. offsetParent：距离元素最近的一个**具有定位**的祖宗元素（relative，absolute，fixed）
-    3. 最终解决办法IntersectionObserver，参数有两个，一个callback，一般执行2次，在刚开始可见和完全消失时执行，第二个options，配置信息，可以在这里配置何时执行回调函数
+    3. 最终解决办法[IntersectionObserver](https://www.ruanyifeng.com/blog/2016/11/intersectionobserver_api.html)，参数有两个，一个callback，一般执行2次，在刚开始可见和完全消失时执行，第二个options，配置信息，可以在这里配置何时执行回调函数
 
         ```
         if ('IntersectionObserver' in window &&
