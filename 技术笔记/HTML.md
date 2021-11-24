@@ -9,7 +9,7 @@
     * title标签：表示文档的标题。title 作为元信息，可能会被用在浏览器收藏夹、微信推送卡片、微博等应用场景，这个时候往往是上下文缺失的。所以 title 应该包含完整的网页内容。
     * base标签：base 标签实际上基本都不用，它是一个历史遗留的标签，作用是给页面上的相对 URL 提供一个 base url。实际开发中，都是使用 javascript 来代替 base 标签。
   * **meta标签：** meta 标签是一组 key-value 对，它通常是一种元信息表示标签。在 head 中可以出现任意多个 meta 标签。
-    * 一般的 meta标签由 name 和 content 两个属性来定义。name 表示元信息的名字，content 则表示元信息的值。
+    1. 一般的 meta标签由 name 和 content 两个属性来定义。name 表示元信息的名字，content 则表示元信息的值。
 
       ```
       <meta name=application-name content="IsForums">
@@ -61,7 +61,7 @@
         content中放他们的value
 
 
-    * 具有charset属性的meta，规定了整个文档的编码格式，一般http头里会规定编码格式，如果没有http头时，这个属性就很重要了
+    2. 具有charset属性的meta，规定了整个文档的编码格式，一般http头里会规定编码格式，如果没有http头时，这个属性就很重要了
 
       ```
       使用 http-equiv 已经不是规定 HTML 文档的字符集的唯一方式：
@@ -69,8 +69,8 @@
       HTML 4.01： <meta http-equiv="content-type" content="text/html; charset=UTF-8">
       HTML5： <meta charset="UTF-8">
       ```
-    * http-equiv一般设置的都是与http头部相关的信息，设置的值会关联到http头部。也就是说浏览器在请求服务器获取html的时候，**服务器会将html中设置的meta放在响应头中返回给浏览器**。常见的类型比如content-type, expires, refresh, set-cookie, window-target, charset， pragma等等。
-    * 具有http-equiv属性的meta，相当于http头的作用，它可以向浏览器传回一些有用信息，meta标签的http-equiv属性语法格式是：
+    3. http-equiv一般设置的都是与http头部相关的信息，设置的值会关联到http头部。也就是说浏览器在请求服务器获取html的时候，**服务器会将html中设置的meta放在响应头中返回给浏览器**。常见的类型比如content-type, expires, refresh, set-cookie, window-target, charset， pragma等等。
+    4. 具有http-equiv属性的meta，相当于http头的作用，它可以向浏览器传回一些有用信息，meta标签的http-equiv属性语法格式是：
 
       ```
       <meta http-equiv="参数"content="参数变量值">；

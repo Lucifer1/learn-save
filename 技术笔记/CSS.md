@@ -369,6 +369,11 @@
       ```
       <link rel="stylesheet" src="styles.css" media="screen" />
       <link rel="stylesheet" src="styles.css" media="print" />
+
+
+      @media screen and (min-width:960px) and (max-width:1200px){
+          body{background:yellow;}
+      }
       ```
 
        1. all：适用于所有设备；

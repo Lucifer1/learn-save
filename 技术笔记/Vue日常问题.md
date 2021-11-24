@@ -70,10 +70,11 @@
         2.  SEO不友好
 
 6. history与hash：
-    1.  比较：
+    1.  [实现原理](https://www.jianshu.com/p/6394a29495c6)
+    2.  比较：
         1.  hash —— 即地址栏 URL 中的 # 符号（此 hash 不是密码学里的散列运算）。比如这个 URL：http://www.abc.com/#/hello，hash 的值为 #/hello。它的特点在于：hash 虽然出现在 URL 中，但不会被包括在 HTTP 请求中，对后端完全没有影响，因此改变 hash 不会重新加载页面。
         2.  history —— 利用了 HTML5 History Interface 中新增的 pushState() 和 replaceState() 方法。（需要特定浏览器支持）这两个方法应用于浏览器的历史记录栈，在当前已有的 back、forward、go 的基础之上，它们提供了对历史记录进行修改的功能。只是当它们执行修改时，虽然改变了当前的 URL，但浏览器不会立即向后端发送请求。
-    2.  比较：history存在一个问题，对于单页应用来讲，理想的使用场景是仅在进入应用时加载index.html，后续操作通过ajax来完成，不会根据 URL 重新请求页面，但是难免遇到特殊情况，比如用户直接在地址栏中输入并回车，浏览器刷新或者重启
+    3.  比较：history存在一个问题，对于单页应用来讲，理想的使用场景是仅在进入应用时加载index.html，后续操作通过ajax来完成，不会根据 URL 重新请求页面，但是难免遇到特殊情况，比如用户直接在地址栏中输入并回车，浏览器刷新或者重启
     hash模式仅改变hash部分的内容，而hash部分是不会包含在HTTP请求中的：
 
         ```
@@ -248,13 +249,13 @@
     2.  display:none是DOM里边有，但是被隐藏了，并且不占据空间，重排和重绘
     3.  visibility:hidden是，被隐藏了，DOM里也有，但是要占据空间，只是重绘不会重排
     4.  v-show就是使用disply:none来隐藏元素
-8. position:absolute/fixed存在时，float不起作用
-9. 当引入keep-alive的时候，页面第一次进入，钩子的触发顺序created-> mounted-> activated，退出时触发deactivated。当再次进入（前进或者后退）时，只触发activated。
-10. computed与watch区别：watch和computed很相似，watch用于观察和监听页面上的vue实例，当然在大部分情况下我们都会使用computed，但如果要在数据变化的同时**进行异步操作或者是比较大的开销**，那么watch为最佳选择。
-11. computed与method区别：method只要调用就会重新执行一次，而computed有缓存，只要依赖的数据没有变化会立即返回之前的计算结果，而不必再次执行函数。
-12. [vue与react的区别](https://www.zhihu.com/question/309891718/answer/1066629375)
+30. position:absolute/fixed存在时，float不起作用
+31. 当引入keep-alive的时候，页面第一次进入，钩子的触发顺序created-> mounted-> activated，退出时触发deactivated。当再次进入（前进或者后退）时，只触发activated。
+32. computed与watch区别：watch和computed很相似，watch用于观察和监听页面上的vue实例，当然在大部分情况下我们都会使用computed，但如果要在数据变化的同时**进行异步操作或者是比较大的开销**，那么watch为最佳选择。
+33. computed与method区别：method只要调用就会重新执行一次，而computed有缓存，只要依赖的数据没有变化会立即返回之前的计算结果，而不必再次执行函数。
+34. [vue与react的区别](https://www.zhihu.com/question/309891718/answer/1066629375)
      1.   Vue跟React的最大区别在于数据的reactivity，就是反应式系统上。**Vue提供反应式的数据，当数据改动时，界面就会自动更新，而React里面需要调用方法SetState**。我把两者分别称为Push-based和Pull-based。所谓Push-based就是说，改动数据之后，数据本身会把这个改动推送出去，告知渲染系统自动进行渲染。在React里面，它是一个Pull的形式，用户要给系统一个明确的信号说明现在需要重新渲染了，这个系统才会重新渲染。两者并没有绝对的优劣之分，更多的也是思维模式和开发习惯的不同。
-13.  [MVC MVVM MVP](http://www.ruanyifeng.com/blog/2015/02/mvcmvp_mvvm.html)，[第二篇](https://juejin.cn/post/6844903480126078989)
+35.  [MVC MVVM MVP](http://www.ruanyifeng.com/blog/2015/02/mvcmvp_mvvm.html)，[第二篇](https://juejin.cn/post/6844903480126078989)
      1.   MVC
           1.   view层是用户看见的层，用户在这边进行操作，然后将事件发送给controller
           2.   controller在事件触发后执行业务逻辑，然后根据逻辑更改model中的数据
@@ -276,19 +277,19 @@
           7.   简述
                1.   在 MVVM 架构下，View 和 Model 之间并没有直接的联系，而是通过 ViewModel 进行交互，Model 和 ViewModel 之间的交互是双向的， 因此 View 数据的变化会同步到 Model 中，而 Model 数据的变化也会立即反应到 View 上。
                2.   ViewModel 通过双向数据绑定把 View 层和 Model 层连接了起来，而View 和 Model 之间的同步工作完全是自动的，无需人为干涉，因此开发者只需关注业务逻辑，不需要手动操作DOM, 不需要关注数据状态的同步问题，复杂的数据状态维护完全由 MVVM 来统一管理。
-14. vue 路由懒加载：不同路由对应的组件分割成不同的代码块，然后当路由被访问的时候才加载对应组件
+36. vue 路由懒加载：不同路由对应的组件分割成不同的代码块，然后当路由被访问的时候才加载对应组件
 
         ```
         魔法注释，来给对应的chunk命名
         const Foo = () => import(/* webpackChunkName: "group-foo" */ './Foo.vue')
         ```
 
-15. vue 在使用路由懒加载时，如果使用了babel，需要添加 syntax-dynamic-import 插件，babel才能正确的解析
-16. 最好所有的数据请求都放在created里边
-17. nextTick
+37. vue 在使用路由懒加载时，如果使用了babel，需要添加 syntax-dynamic-import 插件，babel才能正确的解析
+38. 最好所有的数据请求都放在created里边
+39. nextTick
     1.  Vue 会根据当前浏览器环境优先使用原生的 Promise.then 和 MutationObserver，如果都不支持，就会采用 setTimeout 代替，目的是 延迟函数到 DOM 更新后再使用
-18. **使用计算属性，或者说使用某对象的属性时，使用&&先判断数据是否存在，然后再取数据**
-19. 想要在vue的html中使用枚举
+40. **使用计算属性，或者说使用某对象的属性时，使用&&先判断数据是否存在，然后再取数据**
+41. 想要在vue的html中使用枚举
 
         ```
         enum PRIVILEDGEINDEX {
@@ -308,7 +309,7 @@
         }
         ```
 
-20. Vue的特点和优势
+42. Vue的特点和优势
     1.  vue两大特点：响应式编程、组件化。
     2.  vue的优势：轻量级框架、简单易学、双向数据绑定、组件化、数据和结构的分离、虚拟DOM、运行速度快。
     3.  vue是单页面应用，使页面局部刷新，不用每次跳转页面都要请求所有数据和dom，这样大大加快了访问速度和提升用户体验。而且他的第三方ui库很多节省开发时间。

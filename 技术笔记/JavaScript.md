@@ -564,13 +564,14 @@
     3.  其他
         1.  join('-')，生成字符串
         2.  reduce
+    4.  Array.isArray，Array.from
 40. 柯里化是函数式编程的基础内容，函数式编程，函数时一等公民，函数与其他数据类型一样，处于平等地位，可以赋值给其他变量，也可以作为参数，传入另一个函数，或者作为别的函数的返回值，函数式编程强调将计算过程分解成可复用的函数
 41. DOM
      1.   [getElementById与querySelectorAll](https://juejin.cn/post/7012892247075061768)
      2.   [nodelist与collection](https://juejin.cn/post/6915033047893508109)
      3.   总结：
           1.   nodelist与collection都分为动态和静态的，只不过collection只包含元素，nodelist包含所有节点类型，包括text啥的
-          2.   不同的方法获取到的可能是nodelist也可能是collection
+          2.   name（NodeList）、tagName（HTMLCollection）、className（HTMLCollection）都是动态的，通过 querySelectorAll（NodeList） 获取的是静态的
      4.   要创建新的HTML元素(节点)需要先创建一个元素，然后在已存在的元素中添加它。
 
         * createElement()
@@ -908,3 +909,4 @@
     2.  如果obj里有RegExp、Error对象，则序列化的结果将只得到空对象
     3.  如果obj里有函数，undefined，则序列化的结果会把函数或 undefined丢失
     4.  如果obj里有NaN、Infinity和-Infinity，则序列化的结果会变成null
+70. [JS互换两元素的位置](https://www.jianshu.com/p/8b6ead8beb3a)
