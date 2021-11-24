@@ -2,7 +2,7 @@ function debounce(fn, time) {
   let timer
   return function() {
     if(timer) clearTimeout(timer)
-    setTimeout(() => {
+    timer = setTimeout(() => {
       fn.apply(this, arguments)
     }, time)
   }
@@ -12,7 +12,7 @@ function throttle(fn, time) {
   let timer
   return function() {
     if(timer) return
-    setTimeout(() => {
+    stimer = etTimeout(() => {
       timer = null
       fn.apply(this, arguments)
     }, time)

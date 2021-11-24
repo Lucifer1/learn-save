@@ -3,11 +3,11 @@ class myVue {
     this.$option = option
     this.$data = option.data
     this.$el = option.el
+
+    observe(this.$data)
+
+    new Compile(this.$data, this.$el)
   }
-
-  observe(this.$data)
-
-  new Compile(this.$data, this.$el)
 }
 
 function observe(data) {
@@ -22,7 +22,7 @@ function defineReactive(data, key, val) {
   let dep = new Dep()
   Object.defineProperty(data, key, {
     get() {
-      Dep.target $$ dep.addDep(Dep.target)
+      Dep.target && dep.addDep(Dep.target)
       return val
     }
     set(newVal) {
