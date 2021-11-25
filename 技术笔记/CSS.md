@@ -638,5 +638,6 @@
     2.  position的值不是static或者relative。
     3.  display的值是inline-block、table-cell、flex、table-caption或者inline-flex
     4.  overflow的值不是visible
+56. 子元素有height时，会默认继承父元素的width
 
 
