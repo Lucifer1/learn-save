@@ -910,3 +910,8 @@
     3.  如果obj里有函数，undefined，则序列化的结果会把函数或 undefined丢失
     4.  如果obj里有NaN、Infinity和-Infinity，则序列化的结果会变成null
 70. [JS互换两元素的位置](https://www.jianshu.com/p/8b6ead8beb3a)
+71. [es6扩展运算符与深浅拷贝](https://www.cnblogs.com/jyybeam/p/11831298.html)
+    1.  浅拷贝方法
+        1.  Object.assign():用于合并对象，如果第一个参数为{}时，则可对后面的对象进行浅拷贝
+        2.  Array.slice()与Array.concat()都是浅拷贝
+        3.  Array.from()也是浅拷贝
