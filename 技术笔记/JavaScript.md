@@ -915,3 +915,4 @@
         1.  Object.assign():用于合并对象，如果第一个参数为{}时，则可对后面的对象进行浅拷贝
         2.  Array.slice()与Array.concat()都是浅拷贝
         3.  Array.from()也是浅拷贝
+72. [跨域jsonp实现代码](https://segmentfault.com/a/1190000007665361)
