@@ -399,6 +399,7 @@
 26. 跨域与跨站：**跨域决定的是能不能请求资源，跨站决定的是请求能不能带上cookie**
     1.  同源策略作为浏览器的安全基石，其「同源」判断是比较严格的，相对而言，Cookie中的「同站」判断就比较宽松：只要两个 URL 的 eTLD+1 相同即可，不需要考虑协议和端口。其中，eTLD 表示有效顶级域名，注册于 Mozilla 维护的公共后缀列表（Public Suffix List）中，例如，.com、.co.uk、.github.io 等。eTLD+1 则表示，有效顶级域名+二级域名，例如 taobao.com 等。
     2.  [跨站](https://juejin.cn/post/6926731819903631368)：**Cookie与此息息相关，Cookie实际上遵守的是“同站”策略**
+    3.  [跨域](https://juejin.cn/post/6844903767226351623#heading-5)
 27. 在 JavaScript 中，true && expression 总是会返回 expression, 而 false && expression 总是会返回 false。
 28. __proto__ ，绝大部分浏览器都支持这个非标准的方法访问原型，然而它并不存在于 Person.prototype 中，实际上，它是来自于 Object.prototype ，与其说是一个属性，不如说是一个 getter/setter，当使用 obj.__proto__ 时，可以理解成返回了 Object.getPrototypeOf(obj)。
 
@@ -917,3 +918,11 @@
         3.  Array.from()也是浅拷贝
 72. [跨域jsonp实现代码](https://segmentfault.com/a/1190000007665361)
 73. [JSBridge 原理](https://juejin.cn/post/6844903585268891662)
+    1.  js调用native
+        1.  API注入，native往native里边注入对象或者方法，js调用时，直接执行对应的native代码
+        2.  拦截url scheme
+    2.  native
+        1.  通过字符串拼接的形式直接调用
+74. 页面具有 DTD，或者说指定了 DOCTYPE 时，使用 document.documentElement。页面不具有 DTD，或者说没有指定了 DOCTYPE，时，使用 document.body。
+75. [window、document.documentElement、document.body](https://blog.csdn.net/u011043843/article/details/39761561)、[第二篇](https://juejin.cn/post/6847902220604669960)、在做移动端页面时，发现华为手机浏览器就有DTD问题（由于没有其他安卓手机，不知道是不是安卓手机都有DTD问题），**网上的**
+76. [抽象语法树](https://juejin.cn/post/6844904035271573511)

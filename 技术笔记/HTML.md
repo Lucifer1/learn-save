@@ -22,11 +22,20 @@
         <meta name="viewport" content="width=500, initial-scale=1">
         ```
 
-        物理像素与css像素：
+        **物理像素与css像素**：
         1. 物理像素（设备像素，device pixels）：指的是设备屏幕的物理像素，任何设备的物理像素数量都是固定的。
         2. css像素：是 CSS 和 JS 中使用的一个抽象概念。它**和物理像素之间的比例取决于屏幕的特性**（是否为高密度）以及用户进行的缩放，由浏览器自行换算。
 
         [布局视口、视觉视口和理想视口三个概念](https://juejin.cn/post/6844903687240810509),**当缩放比例为 100% 时，dip 宽度 = CSS 像素宽度 = 理想视口的宽度 = 布局视口的宽度**
+        1. 布局视口与理想视口
+           1. 若手机的理想视口宽度为400px，设置width = device-width，initial-scale = 2，此时视觉视口宽度 = 理想视口宽度 / initial-scale即 200px，布局视口取两者最大值即device-width 400px，其实 initial-scale 大于 1 的情况下，布局视口 都等于 理想视口的大小，即页面的初始大小始终都是 理想视口 大小。
+           2. 若设置width=device-width，initial-scale=0.5，此时视觉视口宽度 = 理想视口宽度 / initial-scale即800px，布局视口取两者最大值即800px，会发现页面出现了滚动条，因为现在布局视口 > 理想窗口
+        2. 理想视口对应的是设备逻辑像素，也就是设备独立像素(device-independent pixel，简称dip)
+        3. 物理像素就是实际的设备像素
+        4. devicePixelRatio = 物理像素 / 设备逻辑像素
+           1. 普通密度桌面显示屏：devicePixelRatio = 1
+           2. 高密度桌面显示屏(Mac Retina)：devicePixelRatio = 2
+           3. 主流手机显示屏：devicePixelRatio = 2 or 3
 
         这里只指定了两个属性，宽度和缩放，实际上 viewport 能控制的更多，它能表示的全部属性如下：
         1. width：页面宽度，可以取值具体的数字，也可以是 device-width，表示跟设备宽度相等。可以分别用window.innerWidth和document.document.clientWidth查看
@@ -161,4 +170,34 @@
 
         是合在一起用的，这样可以清理缓存，再次访问该页面会重新加载。
 
-2. [行内元素与块级元素](https://www.cnblogs.com/yxm440/p/7667539.html)
+2. [行内元素与块级元素分类](https://www.cnblogs.com/yxm440/p/7667539.html)
+3. [1px问题](https://www.jb51.net/html5/627114.html)，[实现方案](https://juejin.cn/post/6847902217727377416#heading-23)
+   1. 设置一个border-image
+   2. 设置一个背景图片background-image
+   3. 通过media查询加上伪类 + transform的scaleY进行缩放
+
+        ```
+        .border__1px:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            height: 1px;
+            width: 100%
+            background-color: #000;
+            transform-origin: 50% 0%;
+        }
+        @media only screen and (-webkit-min-device-pixel-ratio:2) {
+            .border__1px:before {
+                transform: scaleY(0.5)
+            }
+        }
+        @media only screen and (-webkit-min-device-pixel-ratio:3) {
+            .border__1px:before {
+                transform: scaleY(0.33)
+            }
+        }
+        ```
+    4. 设置viewport的intital-scale
+
+4. [移动端、响应式、物理像素、逻辑像素、devicePixelRatio](https://juejin.cn/post/6847902217727377416)
+5. **我们写的 px * scale = dip = 物理像素 / devicePixelRatio**，所谓1px问题就是想让物理像素为1，所以当devicePixelRatio为2时，我们要做的就是让1px = 0.5 dip，那么物理像素就是1px，所以就把scale设置为0.5，那么1px = 0.5 dip = 1物理像素。

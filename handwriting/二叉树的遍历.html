@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+
+<script>
+  function layer(node) {
+    let queque = []
+    let res = []
+    let level = 0
+    if(node === null) {
+      return null
+    }
+    queque.push(node)
+    while(queque.length > 0) {
+      let length = queque.length
+      for(let i = 0; i < length; i++) {
+        let temp = queque.shift()
+        res[level].push(temp.val)
+        if(temp.left !== null) {
+          queque.push(temp.left)
+        }
+        if(temp.right !== null) {
+          queque.push(temp.right)
+        }
+      }
+      level += 1
+    }
+    return res
+  }
+
+  function preorderTraversal (node) {
+    let stack = []
+    let res = []
+    if(node === null){
+      return null
+    }
+    stack.push(node)
+    while (stack.length > 0) {
+      let temp = stack.pop()
+      res.push(temp.val)
+      if(temp.right !== null) {
+        stack.push(temp.right)
+      }
+      if(temp.left !== null) {
+        stack.push(temp.left)
+      }
+    }
+    return res
+  }
+
+  function inorderTraversal (node) {
+    let stack = []
+    let res = []
+    if(node === null){
+      return null
+    }
+    while(node !== null || stack.length > 0) {
+      while(node !== null) {
+        stack.push(node)
+        node = node.left
+      }
+      let temp = stack.pop()
+      res.push(temp.val)
+      node = temp.right
+    }
+    return res
+  }
+
+  function postorderTraversal (node) {
+    let stack = []
+    let res = []
+    if(node === null){
+      return null
+    }
+    stack.push(node)
+    while(stack.length > 0) {
+      let temp = stack.pop()
+      res.unshift(temp.val)
+      if(temp.left !== null) {
+        stack.push(temp.left)
+      }
+      if(temp.right !== null) {
+        stack.push(temp.right)
+      }
+    }
+    return res
+  }
+</script>
+</body>
+</html>
