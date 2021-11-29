@@ -12,7 +12,7 @@ function throttle(fn, time) {
   let timer
   return function() {
     if(timer) return
-    stimer = etTimeout(() => {
+    timer = setTimeout(() => {
       timer = null
       fn.apply(this, arguments)
     }, time)

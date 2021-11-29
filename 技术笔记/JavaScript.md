@@ -926,3 +926,30 @@
 74. 页面具有 DTD，或者说指定了 DOCTYPE 时，使用 document.documentElement。页面不具有 DTD，或者说没有指定了 DOCTYPE，时，使用 document.body。
 75. [window、document.documentElement、document.body](https://blog.csdn.net/u011043843/article/details/39761561)、[第二篇](https://juejin.cn/post/6847902220604669960)、在做移动端页面时，发现华为手机浏览器就有DTD问题（由于没有其他安卓手机，不知道是不是安卓手机都有DTD问题），**网上的**
 76. [抽象语法树](https://juejin.cn/post/6844904035271573511)
+77. JavaScript 会阻塞 DOM 构建，而 CSSOM 的构建又会阻塞 JavaScript 的执行。
+78. [requestAnimationFrame](https://juejin.cn/post/6991297852462858277)
+    1.  返回值：一个 long 整数，请求 ID ，是回调列表中唯一的标识。是个非零值，没别的意义。
+    2.  使用与取消
+
+            ```
+            (() => {
+            const beginBtn = document.querySelector("#begin")
+
+            const endBtn = document.querySelector("#end")
+
+            let myRef;
+
+            beginBtn.addEventListener("click", () => {
+                myRef = requestAnimationFrame(test)
+            })
+
+            endBtn.addEventListener("click", () => {
+                cancelAnimationFrame(myRef)
+            })
+
+            function test() {
+                myRef = requestAnimationFrame(test)
+                console.log('🚀🚀~ myRef:', myRef);
+            }
+            })()
+            ```
