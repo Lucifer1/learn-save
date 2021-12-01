@@ -956,3 +956,36 @@
 
 79. **装饰器只能用于类和类的方法，不能用于函数，因为存在函数提升**
 80. [继承](https://juejin.cn/post/6844903696111763470)
+81. superagent 提交multiagent/form-data的方法，[不能设置content-type的原因](https://juejin.cn/post/6844903773819633678)，**注意要用new FormData()**
+
+        ```
+        var query: any = {}
+        var formData = new FormData()
+        query = {
+        mark: this.form.mark,
+        period: this.form.period,
+        ytkUserId: this.form.ytkUserId
+        }
+        for (let key in query) {
+        console.log(key, query[key])
+        formData.append(key, query[key])
+        }
+        if (this.file) {
+        formData.append('file', this.file)
+        }
+
+        vipService.addTime(formData)
+        .then(async (res) => {
+        console.log('>>>', 're', res)
+        // window.location.reload()
+        })
+
+        function addTime(query: any): Promise<any> {
+        console.log('>>>', 'query', query)
+        return request.post(`${BASE_URL}/leo-vip/period/add`)
+            .send(query)
+            .withCredentials()
+            .then(res => res.body)
+            .catch((err) => err)
+        }
+        ```

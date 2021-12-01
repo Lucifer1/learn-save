@@ -639,5 +639,6 @@
     3.  display的值是inline-block、table-cell、flex、table-caption或者inline-flex
     4.  overflow的值不是visible
 56. 子元素有height时，会默认继承父元素的width
+57. border在有的机型中失效了。原来是因为border 不可以用rem哦
 
 

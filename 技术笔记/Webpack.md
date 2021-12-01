@@ -69,5 +69,88 @@
           1.   entry入口
           2.   异步加载模块
           3.   代码分割（code spliting）
-6.   Webpakck loader plugin
+6. Webpakck loader plugin
      1.   loader 用于转换某些类型的模块，而插件则可以用于执行范围更广的任务。包括：打包优化，资源管理，注入环境变量。
+7. vue-loader 用于解析.vue文件。vue-template-compiler 用于编译模板。cache-loader 用于缓存loader编译的结果。thread-loader 使用 worker 池来运行loader，每个 worker 都是一个 node.js 进程
+8. [source map](https://juejin.cn/post/6963076475020902436)、[第二篇](https://juejin.cn/post/6844903971648372743)、[七种模式](https://juejin.cn/post/6844903450644316174)
+9. [chainWebpack与configureWebpack](https://www.jianshu.com/p/27d82d98a041)、[第二篇](https://segmentfault.com/a/1190000019920162)
+     1.   chainWebpack通过链式编程的形式，来修改默认的webpack配置
+     2.   configureWebpack通过操作对象的形式，来修改默认的webpack配置
+10. configureWebpack对象返回的值会被webpack-merge合并到最终的webpack配置中，如果你需要基于环境有条件的配置行为，或者想要直接修改配置，可以使用这个。该方法的第一个参数就是已经解析好的配置，你可以直接修改配置，或者返回一个将会被合并的对象。像这样：
+11. webpack-merge提供了一个merge连接数组和合并对象创建新对象的函数。如果遇到函数，它将执行它们，通过算法运行结果，然后再次将返回值包装在函数中。**Promises are not supported**
+
+      ```
+      const { merge } = require('webpack-merge');
+
+      // Default API
+      const output = merge(object1, object2, object3, ...);
+
+      // You can pass an array of objects directly.
+      // This works with all available functions.
+      const output = merge([object1, object2, object3]);
+
+      // Keys matching to the right take precedence:
+      const output = merge(
+      { fruit: "apple", color: "red" },
+      { fruit: "strawberries" }
+      );
+      console.log(output);
+      // { color: "red", fruit: "strawberries"}
+      ```
+   1. [使用](https://www.jianshu.com/p/13229b672d66)：如果数据类型不一样，后面的直接完全覆盖前面的，如果两者都是基础数据类型，后面的也会覆盖前面的（这里省略）。如果两者都是数组的话，二者合并
+
+      ```
+      let a = {
+      name:{}
+      }
+      let b = {
+      name:''
+      }
+
+      // result
+      {
+      name:''
+      }
+
+      let a = {
+      age:[1,2]
+      }
+      let b = {
+      age:[3,4,5]
+      }
+
+      //result
+      {
+      age:[1,2,3,4,5]
+      }
+
+      完整 code
+      const { merge } = require('webpack-merge');
+      let a = {
+      name:{},
+      age:[1,2],
+      detail:{
+         location:'Chengdu'
+      }
+      }
+      let b = {
+      name:'',
+      age:[3,4,5],
+      detail:{
+         district:'ShuangLiu'
+      }
+      }
+      console.log(merge(a,b));
+
+      //result
+      {
+         name: '',
+         age: [1,2,3,4,5],
+         detail: { location: 'chengdu', district: 'shuangliu' }
+      }
+      ```
+   2. 对比 Object.assign，这个函数就是后者覆盖前者，是个浅拷贝
+
+12. [.tap()  tapable](https://www.jianshu.com/p/273e1c9904d2)
+    1.  tap 方法用于注册事件，支持传入两个参数，第一个参数为事件名称，在 Webpack 中一般用于存储事件对应的插件名称（名字随意，只是起到注释作用）， 第二个参数为事件处理函数，函数参数为执行 call 方法触发事件时所传入的参数的形参。
+13. [webpack优化](https://juejin.cn/post/6844904071736852487)
