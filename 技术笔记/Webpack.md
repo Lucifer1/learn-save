@@ -1,4 +1,5 @@
-1. [npm install原理](https://www.jianshu.com/p/8beac6cb7309)-整体流程：
+1. [按照问题来学习webpack](https://juejin.cn/post/7023242274876162084)
+2. [npm install原理](https://www.jianshu.com/p/8beac6cb7309)-整体流程：
    1. 检查 .npmrc 文件：优先级为：项目级的 .npmrc 文件 > 用户级的 .npmrc 文件> 全局级的 .npmrc 文件 > npm 内置的 .npmrc 文件
    2. 检查项目中有无 lock 文件。
    3. 无 lock 文件：
@@ -22,10 +23,10 @@
       1. 检查 package.json 中的依赖版本是否和 package-lock.json 中的依赖有冲突。
       2. 如果没有冲突，直接跳过获取包信息、构建依赖树过程，开始在缓存中查找包信息，后续过程相同
 
-2. 符号
+3. 符号
    1. '~'（波浪符号）:他会更新到当前minor version（也就是中间的那位数字）中最新的版本。放到我们的例子中就是："exif-js": "~2.3.0"，这个库会去匹配更新到2.3.x的最新版本，如果出了一个新的版本为2.4.0，则不会自动升级。
    2. '^'（插入符号）: 这个符号就显得非常的灵活了，他将会把当前库的版本更新到当前major version（也就是第一位数字）中最新的版本。放到我们的例子中就是："vue": "^2.2.2", 这个库会去匹配2.x.x中最新的版本，但是他不会自动更新到3.0.0。
-3. resolve: 配置模块如何解析
+4. resolve: 配置模块如何解析
    1. alias: 创建 import 或 require 的别名
       1. 可以在给定对象的键后的末尾添加 $,以表示精准匹配
 
@@ -43,7 +44,7 @@
       1. 设置了extensions属性时，会覆盖webpack的默认数组
       2. 默认数组为extensions:['.js', '.json']
 
-4. devServer
+5. devServer
    1. hot: true 热更新，只会更新更改的组件或者模块，不会整体刷新页面
    2. open: true 是否自动打开浏览器
    3. proxy:
@@ -60,7 +61,7 @@
          }
          ```
 
-5. Webpack chunk bundle
+6. Webpack chunk bundle
      1.   webpack的打包是从一个入口文件开始，也可以说是入口模块，入口模块引用这其他模块，模块再引用模块。Webpack通过引用关系逐个打包模块，这些module就形成了一个Chunk。如果我们有多个入口文件，可能会产出多条打包路径，一条路径就会形成一个Chunk。出了入口entry会产生Chunk，还有两种途径，下面会有介绍。
      2.   Bundle就是我们最终输出的一个或多个打包文件。确实，大多数情况下，一个Chunk会生产一个Bundle。但有时候也不完全是一对一的关系，比如我们把 devtool配置成'source-map'
      3.   Chunk是过程中的代码块，Bundle是结果的代码块。
@@ -69,16 +70,16 @@
           1.   entry入口
           2.   异步加载模块
           3.   代码分割（code spliting）
-6. Webpakck loader plugin
+7. Webpakck loader plugin
      1.   loader 用于转换某些类型的模块，而插件则可以用于执行范围更广的任务。包括：打包优化，资源管理，注入环境变量。
      2.   loader 将按照相反的顺序执行。链中的第一个 loader 将其结果（也就是应用过转换后的资源）传递给下一个 loader，依此类推。最后，链中的最后一个 loader，返回 webpack 所期望的 JavaScript。
-7. vue-loader 用于解析.vue文件。vue-template-compiler 用于编译模板。cache-loader 用于缓存loader编译的结果。thread-loader 使用 worker 池来运行loader，每个 worker 都是一个 node.js 进程
-8. [source map](https://juejin.cn/post/6963076475020902436)、[第二篇](https://juejin.cn/post/6844903971648372743)、[七种模式](https://juejin.cn/post/6844903450644316174)
-9. [chainWebpack与configureWebpack](https://www.jianshu.com/p/27d82d98a041)、[第二篇](https://segmentfault.com/a/1190000019920162)
+8. vue-loader 用于解析.vue文件。vue-template-compiler 用于编译模板。cache-loader 用于缓存loader编译的结果。thread-loader 使用 worker 池来运行loader，每个 worker 都是一个 node.js 进程
+9. [source map](https://juejin.cn/post/6963076475020902436)、[第二篇](https://juejin.cn/post/6844903971648372743)、[七种模式](https://juejin.cn/post/6844903450644316174)
+10. [chainWebpack与configureWebpack](https://www.jianshu.com/p/27d82d98a041)、[第二篇](https://segmentfault.com/a/1190000019920162)
      1.   chainWebpack通过链式编程的形式，来修改默认的webpack配置
      2.   configureWebpack通过操作对象的形式，来修改默认的webpack配置
-10. configureWebpack对象返回的值会被webpack-merge合并到最终的webpack配置中，如果你需要基于环境有条件的配置行为，或者想要直接修改配置，可以使用这个。该方法的第一个参数就是已经解析好的配置，你可以直接修改配置，或者返回一个将会被合并的对象。像这样：
-11. webpack-merge提供了一个merge连接数组和合并对象创建新对象的函数。如果遇到函数，它将执行它们，通过算法运行结果，然后再次将返回值包装在函数中。**Promises are not supported**
+11. configureWebpack对象返回的值会被webpack-merge合并到最终的webpack配置中，如果你需要基于环境有条件的配置行为，或者想要直接修改配置，可以使用这个。该方法的第一个参数就是已经解析好的配置，你可以直接修改配置，或者返回一个将会被合并的对象。像这样：
+12. webpack-merge提供了一个merge连接数组和合并对象创建新对象的函数。如果遇到函数，它将执行它们，通过算法运行结果，然后再次将返回值包装在函数中。**Promises are not supported**
 
       ```
       const { merge } = require('webpack-merge');
@@ -152,10 +153,10 @@
       ```
    2. 对比 Object.assign，这个函数就是后者覆盖前者，是个浅拷贝
 
-12. [.tap()  tapable](https://www.jianshu.com/p/273e1c9904d2)
+13. [.tap()  tapable](https://www.jianshu.com/p/273e1c9904d2)
     1.  tap 方法用于注册事件，支持传入两个参数，第一个参数为事件名称，在 Webpack 中一般用于存储事件对应的插件名称（名字随意，只是起到注释作用）， 第二个参数为事件处理函数，函数参数为执行 call 方法触发事件时所传入的参数的形参。
-13. [webpack优化](https://juejin.cn/post/6844904071736852487)
-14. [打包优化](https://juejin.cn/post/6971743815434993671#heading-13)
+14. [webpack优化](https://juejin.cn/post/6844904071736852487)
+15. [打包优化](https://juejin.cn/post/6971743815434993671#heading-13)
     1.  开发环境，development
         1.  source-map
             1.  开启source-map配置很简单：devtool:"source-map"。source-map的值有多种类型，简单解释下。
@@ -187,4 +188,41 @@
         7.  代码分割：Webpack**默认**会将所有依赖的文件打包输出到**一个**bundle.js中（单入口时），当应用程序逐渐复杂，这个bundle.js文件也会**越来越大**，浏览器加载的速度也会越来越慢，所以就需要使用代码分割来将不同代码单独打包成不同chunk输出。**方法有两种**：
             1.  通过optimization将公共代码单独打包成chunk
             2.  import动态导入，当想要根据业务拆分bundle时推荐用这种方式。import动态导入的模块Webpack会将其作为单独的chunk打包。
-15. [手写js打包器](https://juejin.cn/post/6844904032587382797)
+16. [手写js打包器](https://juejin.cn/post/6844904032587382797)
+17. @babel/preset-env是一个智能的babel预设, 让你能使用最新的JavaScript语法, 它会帮你转换成代码的目标运行环境支持的语法, 提升你的开发效率并让打包后的代码体积更小
+18. 各个loader的作用
+    1.  style-loader 就是将处理好的 css 通过 style 标签的形式添加到页面上，核心原理（博客看问题1）
+
+            ```
+            const content = `${样式内容}`
+            const style = document.createElement('style');
+            style.innerHTML = content;
+            document.head.appendChild(style);
+            ```
+         如果希望可以通过 CSS 文件的形式引入到页面上，需要使用mini-css-extract-plugin
+    2.  file-loader：解决图片引入问题，并将图片 copy 到指定目录，默认为 dist
+    3.  url-loader：依赖 file-loader，当图片小于 limit 值的时候，会将图片转为 base64 编码，大于 limit 值的时候依然是使用 file-loader 进行拷贝
+    4.  img-loader：压缩图片
+    5.  babel-loader 使用 Babel 加载 ES2015+ 代码并将其转换为 ES5
+
+19. 各个plugin的作用
+    1.  如果我想打包后的资源文件，例如：js 或者 css 文件可以自动引入到 Html 中，就需要使用插件 html-webpack-plugin来帮助你完成这个操作
+20. .browserslistrc文件，用来配置babel和postcss的浏览器配置，如果不配置该文件babel-loader不生效，postcss-loader会报错
+
+         ```
+         # 换行相当于 and
+         last 2 versions # 回退两个浏览器版本
+         > 0.5% # 全球超过0.5%人使用的浏览器，可以通过 caniuse.com 查看不同浏览器不同版本占有率
+         IE 10 # 兼容IE 10
+         ```
+
+21. .babelrc.js或babel.config.js，为了避免 webpack.config.js 太臃肿，建议将 Babel 配置文件提取出来
+22. Webpack 文件指纹策略是将文件名后面加上 hash 值，这块与缓存结合,filename: "\[name]\[hash:8]\[ext]"，三种hash值
+    1.  hash ：每次构建生成的唯一 hash 值，任何一个文件改动，整个项目的构建 hash 值都会改变；
+    2.  chunkhash：根据 chunk 生成 hash 值，文件的改动只会影响其所在 chunk 的 hash 值；
+    3.  contenthash：根据文件内容生成hash 值，每个文件都有单独的 hash 值，文件的改动只会影响自身的 hash 值；
+    4.  其他的占位符的意义
+        1.  ext	文件后缀名
+        2.  name	文件名
+        3.  path	文件相对路径
+        4.  folder	文件所在文件夹

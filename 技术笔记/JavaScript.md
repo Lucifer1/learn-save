@@ -989,3 +989,12 @@
             .catch((err) => err)
         }
         ```
+
+82. [博客](https://www.jianshu.com/p/437503ea6875)，JavaScript中Object对象原型上的hasOwnProperty()用来判断一个属性是定义在对象本身而不是继承自原型链。
+
+        ```
+        obj.hasOwnProperty(key)
+        Object.prototype.hasOwnProperty.call(obj, key)
+        Object.hasOwnProperty.call(obj, key)
+        Object.prototype.hasOwnProperty===Object.hasOwnProperty // true
+        ```

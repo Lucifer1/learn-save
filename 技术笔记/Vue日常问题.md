@@ -241,6 +241,10 @@
 25. vue 区分不同的环境，通过--mode来实现，配置 /.env.我们定义的环境名字/，里边配置
      1.   NODE_ENV：production和development
      2.   自己定义其他的变量也可以，上边那个变量也不是一定的，是社区约定的
+     3.   使用：vue-cli-service build --mode 我们定义的环境名字
+     4.   当直接调用vue-cli-service build，没有设置--mode时，默认值时development
+     5.   NODE_ENV属性值 一般只有 production/test/development 三种值（没有在.env.[mode]文件中配置该值的前提下）,如果在 .env.[mode] 文件中设置了 NODE_ENV值，则覆盖
+production对应production、test对应test、其他默认都是development
 26. underscore安装后不能使用，https://blog.csdn.net/qq_40314318/article/details/114284280，要在文件里边声明一下
 27. .sync
 28. vue先渲染父组件再渲染子组件
@@ -327,3 +331,5 @@
         3.  然后监听图片的load事件，load触发之后，让占位符消失
     2.  遇见的问题
         1.  load事件不触发：这个就涉及到了前段时间学的东西，缓存，因为我们每次拿到的url是一样的，浏览器第一次拿到这个url的时候会发送请求，并将请求的内容缓存，第二次碰见相同的url，则会先查询memory cache然后再找disk cache，然后才会发请求，load不触发就是因为浏览器从缓存中找到了，所以不触发
+47. vue inspect: **查看的是与vue.config.js合并之后的webpack配置**，不是项目默认的通用配置
+48. [vue.config.js](https://juejin.cn/post/6886698055685373965)
