@@ -155,3 +155,36 @@
 12. [.tap()  tapable](https://www.jianshu.com/p/273e1c9904d2)
     1.  tap 方法用于注册事件，支持传入两个参数，第一个参数为事件名称，在 Webpack 中一般用于存储事件对应的插件名称（名字随意，只是起到注释作用）， 第二个参数为事件处理函数，函数参数为执行 call 方法触发事件时所传入的参数的形参。
 13. [webpack优化](https://juejin.cn/post/6844904071736852487)
+14. [打包优化](https://juejin.cn/post/6971743815434993671#heading-13)
+    1.  开发环境，development
+        1.  source-map
+            1.  开启source-map配置很简单：devtool:"source-map"。source-map的值有多种类型，简单解释下。
+            2.  source-map 各选项常用组成：[inline-|eval-][cheap-[module-]]source-map
+                1.  inline：内联，一个chunk生成一个总的source-map。 内联不生成 map.js 文件，而是通过 data-url 的形式直接注入到 chunk 里；内联构建速度更快。
+                2.  eval：内联，每一个文件生成一个source-map
+                3.  cheap：外部，报错位置只能精确到行。
+                4.  cheap-module：显示第三方库的source-map
+        2.  热更新
+            1.  devServer启动一个代理服务器。启动过后修改代码就会自动刷新浏览器了，但这个并不是HMR。HMR：模块热替换，也可以理解为局部替换。替换、添加或删除 模块，而无需重新加载整个页面。通过设置hot: true
+    2.  生产环境，production
+        1.  oneOf
+            1.  文件会去匹配rules下面的每一个规则，即使已经匹配到某个规则了也会继续向下匹配。而如果将规则放在 oneOf 属性中，则一旦匹配到某个规则后，就停止匹配了。
+        2.  缓存：在编译打包时可对文件做缓存，有两种方式
+            1.  自身带有缓存功能的loader，如babel-loader,vue-loader
+            2.  使用专门的loader（cache-loader）
+            3.  **开启缓存后，对于未改动的文件，webpack直接从缓存中读取而不用再次编译，大大加快构建速度。**
+        3.  多进程打包（thread-loader）
+            1.一般只有在编译花费时间较长时才需要使用 thread-loader，因为这个 loader 启动和通信都是有开销的(大概600ms,可以看13)，如果时间较短，使用这个 loader 就得不偿失了。
+        4.  外部扩展(externals)：externals 用来告诉 Webpack 要构建的代码中使用了哪些不用被打包的模块，这些模块可能是通过外部环境（如CDN）引入的。
+        5.  DLL（动态链接库）:使用dll技术**对公共库进行提前打包**，可大大提升构建速度。公共库一般情况下是**不会有改动**的，所以这些模块只需要编译一次就可以了，并且可以提前打包好。在主程序后续构建时如果检测到该公共库**已经**通过dll打包了，就不再对其编译而是直接**从动态链接库中获取**。实现dll打包需要以下三步：
+            1.  抽取公共库，打包到一个或多个动态链接库中。
+            2.  将打包好的动态链接库在页面中引入。
+            3.  主程序使用了动态链接库中的公共库时，不能被打包入bundle，应该直接去动态链接库中获取。
+        6.  Tree Shaking（树摇）：移除 JavaScript 上下文中的未引用代码(dead-code)。将整个应用程序想象成一棵树，绿色的树叶表示实际用到的source code（源码）和library（库），灰色的树叶则表示未被使用的代码，是枯萎的树叶。为了除去这些死去的无用的树叶，你需要摇动这棵树使其落下。这就是Tree Shaking的名称由来。**总的来说，删掉没用过的代码**，
+            1.  Webpack4中还做不到，Webpack4中只会去除从未被使用的模块
+            2.  如何设置：将mode设置为"production"，Webpack就自动启用Tree Shaking了
+            3.  **注意：**源代码必须使用 静态的 ES6 模块化语法。原因是Webpack在构建时通过静态分析，分析出代码之间的依赖关系。而动态导入如require语法只有在执行时才知道导入了哪个模块，所以无法做Tree Shaking。三方库无法做Tree Shaking。原因猜测是Webpack无法保证三方库导入是否会直接对程序产生影响。
+        7.  代码分割：Webpack**默认**会将所有依赖的文件打包输出到**一个**bundle.js中（单入口时），当应用程序逐渐复杂，这个bundle.js文件也会**越来越大**，浏览器加载的速度也会越来越慢，所以就需要使用代码分割来将不同代码单独打包成不同chunk输出。**方法有两种**：
+            1.  通过optimization将公共代码单独打包成chunk
+            2.  import动态导入，当想要根据业务拆分bundle时推荐用这种方式。import动态导入的模块Webpack会将其作为单独的chunk打包。
+15. [手写js打包器](https://juejin.cn/post/6844904032587382797)
