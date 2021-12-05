@@ -4,7 +4,7 @@ function myPromise(fn) {
   let resolve = (val) => {
     setTimeout(() => {
       this.data = val
-      this.cbs.forEach(cb => cb(val)})
+      this.cbs.forEach(cb => cb(val))
     })
   }
 
@@ -15,7 +15,7 @@ myPromise.prototype.then = function(onResolved) {
   return new myPromise(resolve => {
     this.cbs.push(() => {
       let res = onResolved(this.data)
-      if(res instanceof myPromise) {
+      if (res instanceof myPromise) {
         res.then(resolve)
       } else {
         resolve(res)
@@ -23,3 +23,18 @@ myPromise.prototype.then = function(onResolved) {
     })
   })
 }
+
+new myPromise((resolve) => {
+  setTimeout(() => {
+    resolve(1);
+  }, 500);
+})
+  .then((res) => {
+    console.log(res);
+    return new myPromise((resolve) => {
+      setTimeout(() => {
+        resolve(2);
+      }, 500);
+    });
+  })
+  .then(console.log);

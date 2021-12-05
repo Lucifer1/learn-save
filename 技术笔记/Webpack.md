@@ -153,7 +153,7 @@
       ```
    2. 对比 Object.assign，这个函数就是后者覆盖前者，是个浅拷贝
 
-13. [.tap()  tapable](https://www.jianshu.com/p/273e1c9904d2)
+13. [.tap()  tapable](https://www.jianshu.com/p/273e1c9904d2)、[第二篇](https://juejin.cn/post/6975321674015047693#heading-6)
     1.  tap 方法用于注册事件，支持传入两个参数，第一个参数为事件名称，在 Webpack 中一般用于存储事件对应的插件名称（名字随意，只是起到注释作用）， 第二个参数为事件处理函数，函数参数为执行 call 方法触发事件时所传入的参数的形参。
 14. [webpack优化](https://juejin.cn/post/6844904071736852487)
 15. [打包优化](https://juejin.cn/post/6971743815434993671#heading-13)

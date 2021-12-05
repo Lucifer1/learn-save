@@ -16,6 +16,13 @@ class KVue {
 
 }
 
+function observe(obj) {
+  if (typeof obj !== 'object' || obj == null) {
+    return
+  }
+  new Observer(obj)
+}
+
 class Observer {
   constructor(value) {
     this.value = value
@@ -27,28 +34,6 @@ class Observer {
       defineReactive(obj, key, obj[key])
     })
   }
-}
-
-function observe(obj) {
-  if (typeof obj !== 'object' || obj == null) {
-    return
-  }
-  new Observer(obj)
-}
-
-function proxy(vm) {
-  Object.keys(vm.$data).forEach(key => {
-    Object.defineProperty(vm, key, {
-      configurable: true,
-      enumerable: true,
-      get() {
-        return vm.$data[key]
-      },
-      set(newVal) {
-        vm.$data[key] = newVal
-      }
-    })
-  })
 }
 
 function defineReactive(obj, key, val) {
@@ -71,6 +56,21 @@ function defineReactive(obj, key, val) {
         dep.notify()
       }
     }
+  })
+}
+
+function proxy(vm) {
+  Object.keys(vm.$data).forEach(key => {
+    Object.defineProperty(vm, key, {
+      configurable: true,
+      enumerable: true,
+      get() {
+        return vm.$data[key]
+      },
+      set(newVal) {
+        vm.$data[key] = newVal
+      }
+    })
   })
 }
 
