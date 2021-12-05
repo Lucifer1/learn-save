@@ -277,7 +277,7 @@
     1. css 的继承很简单，分为默认继承的和默认不继承的，但所有属性**都可以**通过设置 inherit 实现继承。
     2. 默认继承的 ("Inherited: Yes") 的属性：
        1. **所有元素默认继承：visibility、cursor**
-       2. 文本属性默认继承：letter-spacing、word-spacing、**white-space**、line-height、color、font、 font-family、**font-size**、font-style、font-variant、font-weight、text-indent、**text-align**、text-shadow、text-transform、direction
+       2. 文本属性默认继承：letter-spacing、word-spacing、**white-space**、**line-height**、**color**、font、 font-family、**font-size**、font-style、font-variant、**font-weight**、text-indent、**text-align**、text-shadow、text-transform、direction
        3. 列表元素默认继承：list-style、list-style-type、list-style-position、list-style-image
        4. 表格元素默认继承：border-collapse
     3. 默认不继承的("Inherited: No") 的属性：

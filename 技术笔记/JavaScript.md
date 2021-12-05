@@ -314,7 +314,7 @@
     2.  string类型的数字例如，'9' 在前边加一个+号会转换为number类型
         1.  a = '9'  +a = 9
 17.  虚环境的添加：
-    1.  在页面对应的template里边添加一个js
+     1.  在页面对应的template里边添加一个js
 
             ```
             <% if (process.env.VUE_APP_CONFIG === 'test' || process.env.VUE_APP_CONFIG === 'dev') {
@@ -322,6 +322,7 @@
             <script src="https://xyks.yuanfudao.biz/h5/venv-tools/venv-tools-0.0.3.js"></script>
             <% } %>
             ```
+
         需要注意的是，if的判断条件，不同项目里边关于test和dev的定义可能是不一样的，这次碰到的是，vue-cli3的项目里边是上边这种，vue-cli2里边是process.env.NODE_ENV === 'production'，process.env.NODE_ENV === 'development'
 
 18. js 进入页面后在顶部
@@ -372,8 +373,8 @@
         | obj2 |   Object 类型 -> 指向堆中的obj1  |
         | obj1 |   Object 类型 -> 指向堆中的obj1  |
 
-23. 当数组作为函数调用而不是构造函数调用时，它会创建并初始化一个新的数组对象。因此当Array(...)和new Array(...)接收同样的参数时，它们是相同的。
-24. 一个事情
+22. 当数组作为函数调用而不是构造函数调用时，它会创建并初始化一个新的数组对象。因此当Array(...)和new Array(...)接收同样的参数时，它们是相同的。
+23. 一个事情
 
     ```
     console.log(typeof String('3'));
@@ -393,24 +394,28 @@
 
     简单理解一下，new的作用就是创建一个对象，对于说new之后的typeof都是object，而直接使用的话，可以理解为类型转换，就是基础数据类型
 
-25. this
+24. this
     1.  this的值是可以用call方法修改的，而且只有在调用的时候我们才能确定this的值。
     2.  箭头函数的this和它在定义时外层的this是一样的，如果外层的this变了，箭头函数的this也会变，但是不能直接更改箭头函数this的指向
-26. 跨域与跨站：**跨域决定的是能不能请求资源，跨站决定的是请求能不能带上cookie**
+25. 跨域与跨站：**跨域决定的是能不能请求资源，跨站决定的是请求能不能带上cookie**
     1.  同源策略作为浏览器的安全基石，其「同源」判断是比较严格的，相对而言，Cookie中的「同站」判断就比较宽松：只要两个 URL 的 eTLD+1 相同即可，不需要考虑协议和端口。其中，eTLD 表示有效顶级域名，注册于 Mozilla 维护的公共后缀列表（Public Suffix List）中，例如，.com、.co.uk、.github.io 等。eTLD+1 则表示，有效顶级域名+二级域名，例如 taobao.com 等。
     2.  [跨站](https://juejin.cn/post/6926731819903631368)：**Cookie与此息息相关，Cookie实际上遵守的是“同站”策略**
-    3.  [跨域](https://juejin.cn/post/6844903767226351623#heading-5)
-27. 在 JavaScript 中，true && expression 总是会返回 expression, 而 false && expression 总是会返回 false。
-28. __proto__ ，绝大部分浏览器都支持这个非标准的方法访问原型，然而它并不存在于 Person.prototype 中，实际上，它是来自于 Object.prototype ，与其说是一个属性，不如说是一个 getter/setter，当使用 obj.__proto__ 时，可以理解成返回了 Object.getPrototypeOf(obj)。
+    3.  [跨域](https://juejin.cn/post/6844903767226351623#heading-5)：这里说的js跨域是指通过js在不同的域之间进行数据传输或通信，比如用ajax向一个不同的域请求数据，或者**通过js获取页面中不同域的框架中(iframe)的数据(window.name + iframe跨域)**。
+        1.  cors
+        2.  jsonp
+        3.  window.name + iframe
+        4.  postMessage
+26. 在 JavaScript 中，true && expression 总是会返回 expression, 而 false && expression 总是会返回 false。
+27. __proto__ ，绝大部分浏览器都支持这个非标准的方法访问原型，然而它并不存在于 Person.prototype 中，实际上，它是来自于 Object.prototype ，与其说是一个属性，不如说是一个 getter/setter，当使用 obj.__proto__ 时，可以理解成返回了 Object.getPrototypeOf(obj)。
 
     ```
     obj.__proto__ === Object.getPrototypeOf(obj)
     ```
 
-29. 继承的时候，为什么要subClass.prototype = new parentClass()
+28. 继承的时候，为什么要subClass.prototype = new parentClass()
     1.  因为这样在给subClass的prototype添加属性的时候就不会影响到父类的prototype，因为子类的prototype是父类的一个实例，添加属性时相当于给实例添加属性，如果更改的是subClass.prototype.__proto__就会影响到父类了
     2.  obj.__proto__ === Object.prototype,说明两个指向同一个对象，a变b就变，b变a就变，但是给obj添加属性，更改是的obj本身，而不是__proto__,所以不会影响原型
-30. 控制元素的滚动位置
+29. 控制元素的滚动位置
     1.  整体控制
 
         ```
@@ -423,16 +428,16 @@
         document.documentElement.scrollLeft = 0
         ```
     2.  单个元素控制：拿到对应元素使用这两个属性
-31. 无限记录
+30. 无限记录
     1.  obj.offsetTop 指 obj 距离上方或上层控件的位置，整型，单位像素。
     2.  obj.offsetLeft 指 obj 距离左方或上层控件的位置，整型，单位像素。
     3.  obj.offsetWidth 指 obj 控件自身的宽度，整型，单位像素。
     4.  obj.offsetHeight 指 obj 控件自身的高度，整型，单位像素。
-32. [window.addEventListener document.addEventListener](https://blog.csdn.net/huohua0612/article/details/89576263)
+31. [window.addEventListener document.addEventListener](https://blog.csdn.net/huohua0612/article/details/89576263)
     1.  html（body）被document包裹，document被window包裹
-33. document.body.scrollTop || document.documentElement.scrollTop
+32. document.body.scrollTop || document.documentElement.scrollTop
     1.  标准浏览器是只认识documentElement.scrollTop的
-34. dom.getBoundingClientRect(): 用于获得页面中某个元素的左，上，右和下分别相对浏览器视窗的位置。
+33. dom.getBoundingClientRect(): 用于获得页面中某个元素的左，上，右和下分别相对浏览器视窗的位置。
     1.  使用注意
 
         ```
@@ -448,7 +453,7 @@
        1. ie5以上都能支持，但是又一点点地方需要修正一下，
        2. IE67的left、top会少2px,并且没有width、height属性。
     3. 返回值：像素值，如果是rem的话需要进行转换
-35. 在购买页有一块逻辑，中间部分的购买按钮在屏幕中消失时，此时显示底部的购买bottombar，实现方式
+34. 在购买页有一块逻辑，中间部分的购买按钮在屏幕中消失时，此时显示底部的购买bottombar，实现方式
     1. 最开始使用了getBoundingClientRect()，但是考虑性能问题，所以把他+节流函数当成了兜底方案
     2. 使用offsetTop、offsetHeight和scrollTop兜底也可
       1. offsetTop：元素到offsetParent顶部的距离
@@ -486,8 +491,8 @@
         io.disconnect();
         ```
 
-36. console.log(Boolean(-1)); === true
-37. map函数，默认的三个参数, item,index,arr，如果只给map一个函数名，不给任何参数时，map会默认将这三个参数传给使用的函数，
+35. console.log(Boolean(-1)); === true
+36. map函数，默认的三个参数, item,index,arr，如果只给map一个函数名，不给任何参数时，map会默认将这三个参数传给使用的函数，
 
         ```
         function trible(num1, num2, num3, num4) {
@@ -504,7 +509,7 @@
         [ 0, 2 ]
         ```
 
-38. [JS中的四种循环](https://juejin.cn/post/6844903513336610823)
+37. [JS中的四种循环](https://juejin.cn/post/6844903513336610823)
     1.  for
     2.  for-in： for-in 并不适合用来遍历 Array 中的元素，其更适合遍历对象中的属性，这也是其被创造出来的初衷。**for-in 不仅仅遍历 array 自身的属性，其还遍历 array 原型链上的所有可枚举的属性**
 
@@ -548,7 +553,7 @@
        3. 与 forEach 不同的是，它可以正确响应 break、continue 和 return 语句。
        4. 其不仅可以遍历数组，还可以遍历类数组对象和其他可迭代对象。
        5. **for of不能循环普通的对象，需要通过和Object.keys()搭配使用。**
-39. 常用的数组方法
+38. 常用的数组方法
     1.  改变原数组
         1.  push
         2.  pop
@@ -566,8 +571,8 @@
         1.  join('-')，生成字符串
         2.  reduce
     4.  Array.isArray，Array.from
-40. 柯里化是函数式编程的基础内容，函数式编程，函数时一等公民，函数与其他数据类型一样，处于平等地位，可以赋值给其他变量，也可以作为参数，传入另一个函数，或者作为别的函数的返回值，函数式编程强调将计算过程分解成可复用的函数
-41. DOM
+39. 柯里化是函数式编程的基础内容，函数式编程，函数时一等公民，函数与其他数据类型一样，处于平等地位，可以赋值给其他变量，也可以作为参数，传入另一个函数，或者作为别的函数的返回值，函数式编程强调将计算过程分解成可复用的函数
+40. DOM
      1.   [getElementById与querySelectorAll](https://juejin.cn/post/7012892247075061768)
      2.   [nodelist与collection](https://juejin.cn/post/6915033047893508109)
      3.   总结：
@@ -606,8 +611,8 @@
                 var parent = document.getElementById("div1");
                 var child = document.getElementById("p1");
                 parent.replaceChild(para, child);
-42.  [交换两个元素位置](https://www.jianshu.com/p/8b6ead8beb3a)
-43.  Array
+41.  [交换两个元素位置](https://www.jianshu.com/p/8b6ead8beb3a)
+42.  Array
      1.   Array.includes(value):返回一个布尔值，value是否在数组中。
      2.   Array.isArray():判断是否为数组
      3.   Array.fill():填充数组
@@ -622,18 +627,18 @@
             // expected output: Array [2, 4, 6]
             ```
 
-44. babel 与 babel-polyfill
+43. babel 与 babel-polyfill
      1.   **Babel是一个JS编译器，它解决语法层面的问题。用于将ES6+的高级语法转为ES5。**
      2.   Polyfill 是一块代码（通常是 Web 上的 JavaScript），用来为旧浏览器提供它没有原生支持的较新的功能。如果要解决API层面的问题，需要使用垫片。比如常见的有babel-polyfill、babel-runtime 和 babel-plugin-transform-runtime。**直白一点**，他就是把当前浏览器不支持的方法通过用支持的方法重写来获得支持。
      3.   一个兼容的是语法，一个兼容的是方法
-45.  [手写bind](https://zhuanlan.zhihu.com/p/163254710)
-46.  模拟表单提交，给post设置header
+44.  [手写bind](https://zhuanlan.zhihu.com/p/163254710)
+45.  模拟表单提交，给post设置header
      1.   set('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8')
-47.  闭包
-48.  this的指向
+46.  闭包
+47.  this的指向
    1. 普通函数的this：[答案](https://segmentfault.com/a/1190000011194676)
    2. 如果上边答案里边的箭头函数没看懂，看这篇[答案](https://blog.csdn.net/weixin_42519137/article/details/88053339)
-49. 手写new、call、apply、深拷贝、instancecof
+48. 手写new、call、apply、深拷贝、instancecof
    3. new原理(new 底层做了什么):
 
         ```
@@ -745,8 +750,8 @@
           }
           ```
 
-50. 宏任务与微任务，**这个必须弄懂** [网址](https://mp.weixin.qq.com/s/9Xk-HBQFaIEpyH8FqxBi6g)
-51. 跨域问题，[网址](https://blog.csdn.net/lareinalove/article/details/84107476)
+49. 宏任务与微任务，**这个必须弄懂** [网址](https://mp.weixin.qq.com/s/9Xk-HBQFaIEpyH8FqxBi6g)
+50. 跨域问题，[网址](https://blog.csdn.net/lareinalove/article/details/84107476)
    4. 同源策略：简单来讲同源策略就是浏览器为了保证用户信息的安全，防止恶意的网站窃取数据，禁止不同域之间的JS进行交互。对于浏览器而言只要域名、协议、端口其中一个不同就会引发同源策略，从而限制他们之间如下的交互行为：
       1. Cookie、LocalStorage和IndexDB无法读取；
       2. DOM无法获得；
@@ -779,12 +784,12 @@
 
       4. 掌握这两个就行了，一般只问第一个，把一个掌握好
 
-52. 双等号与三等号的区别：
+51. 双等号与三等号的区别：
    8. == 用于比较、判断两者相等，比较时可自动换数据类型
    9. === 用于（严格）比较、判断两者（严格）相等，不会进行自动转换，要求进行比较的操作数必须类型一致，不一致时返回flase。
    10. 简单来说，一个会自动换类型再比较，一个不换直接比较
 
-53. typeof instanceOf Object.prototype.toString类型判断
+52. typeof instanceOf Object.prototype.toString类型判断
    11. typeof运算符返回一个用来表示表达式的数据类型的字符串。typeof一般返回以下几个字符串："number"， "string"，"boolean"，"object"，"function"，"undefined"。对于Array，Null等特殊对象使用typeof一律返回object，这正是typeof的局限性。
    12. instanceof用来检测某个对象是不是另一个对象的实例。它会更具原型链向上检测
 
@@ -818,9 +823,9 @@
         console.log(Object.prototype.toString.call(h))  // [object Null]
         ```
 
-54. 事件委托[网址](https://www.cnblogs.com/wp-js/p/7609539.html)
-55. 图片懒加载[网址](https://blog.csdn.net/w1418899532/article/details/90515969)
-56. 静态nodelist 与 动态nodelist [地址](https://www.cnblogs.com/floaty/p/5812089.html)
+53. 事件委托[网址](https://www.cnblogs.com/wp-js/p/7609539.html)
+54. 图片懒加载[网址](https://blog.csdn.net/w1418899532/article/details/90515969)
+55. 静态nodelist 与 动态nodelist [地址](https://www.cnblogs.com/floaty/p/5812089.html)
 
    * 动态的nodelist，程序员对于dom的操作会动态的反应在nodelist当中，比如获取ul中的所以li，返回一个动态的nodelist，当我们想ul中添加一个li，那么此时nodelist的长度也会动态的+1，但是静态的就不会
    * 但是动态的nodelist的性能比静态的要好，所以说要考虑情况去进行使用
@@ -924,11 +929,11 @@
     2.  native
         1.  通过字符串拼接的形式直接调用
 74. 页面具有 DTD，或者说指定了 DOCTYPE 时，使用 document.documentElement。页面不具有 DTD，或者说没有指定了 DOCTYPE，时，使用 document.body。
-75. [window、document.documentElement、document.body](https://blog.csdn.net/u011043843/article/details/39761561)、[第二篇](https://juejin.cn/post/6847902220604669960)、在做移动端页面时，发现华为手机浏览器就有DTD问题（由于没有其他安卓手机，不知道是不是安卓手机都有DTD问题），**网上的**
+75. [window、document.documentElement、document.body](https://juejin.cn/post/6847902220604669960)、在做移动端页面时，发现华为手机浏览器就有DTD问题（由于没有其他安卓手机，不知道是不是安卓手机都有DTD问题），**网上的**
 76. [抽象语法树](https://juejin.cn/post/6844904035271573511)
 77. JavaScript 会阻塞 DOM 构建，而 CSSOM 的构建又会阻塞 JavaScript 的执行。
 78. [requestAnimationFrame](https://juejin.cn/post/6991297852462858277)
-    1.  返回值：一个 long 整数，请求 ID ，是回调列表中唯一的标识。是个非零值，没别的意义。
+    1.  返回值：一个 long 整数，请求 ID ，是回调列表中唯一的标识。是个非零值，没别的意义。每执行一次，数值就会 +1
     2.  使用与取消
 
             ```
@@ -953,6 +958,8 @@
             }
             })()
             ```
+    3. 浏览器刷新一次的时候，会执行所有的 requestAnimationFrame ，并且它们的回调参数是一模一样的。
+    4. 对比setTimeout与setInterval，这两个函数当定时结束后，之后把代码添加到宏任务队列当中，如果前方还有其他任务需要执行的话，那么这两个函数执行的时间会大于我们期望的时间
 
 79. **装饰器只能用于类和类的方法，不能用于函数，因为存在函数提升**
 80. [继承](https://juejin.cn/post/6844903696111763470)
@@ -990,6 +997,7 @@
         }
         ```
 
+<<<<<<< Updated upstream
 82. [博客](https://www.jianshu.com/p/437503ea6875)，JavaScript中Object对象原型上的hasOwnProperty()用来判断一个属性是定义在对象本身而不是继承自原型链。
 
         ```
@@ -998,3 +1006,6 @@
         Object.hasOwnProperty.call(obj, key)
         Object.prototype.hasOwnProperty===Object.hasOwnProperty // true
         ```
+=======
+82. [iframe](https://www.cnblogs.com/html55/p/10163631.html)
+>>>>>>> Stashed changes
