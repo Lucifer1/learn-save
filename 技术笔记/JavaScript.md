@@ -1027,3 +1027,12 @@
         Object.prototype.hasOwnProperty===Object.hasOwnProperty // true
         ```
 83. [iframe](https://www.cnblogs.com/html55/p/10163631.html)
+84. [ requestAnimationFrame 是属于微任务还是宏任务呢？](https://zhuanlan.zhihu.com/p/360507457)答案是宏任务，但是，它和那些平行级别的那些宏任务执行顺序是不确定的。比如说，即使一个 setTimeout 在 requestAnimationFrame 的前面，它们里面的两个回调的顺序是不确定的。我们来看下面这个例子。
+85. [es6与commonJS区别](https://juejin.cn/post/6844903983987834888#comment)
+    1.  CommonJS模块是运行时加载，ES6 Module是编译时输出接口；
+    2.  CommonJS加载的是整个模块，将所有的接口全部加载进来，ES6 Module可以单独加载其中的某个接口；
+    3.  CommonJS输出是值的拷贝，ES6 Module输出的是值的引用，被输出模块的内部的改变会影响引用的改变；
+    4.  CommonJS this指向当前模块，ES6 Module this指向undefined;
+
+
+
