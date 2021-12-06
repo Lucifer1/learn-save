@@ -477,7 +477,28 @@
         ```
 
        1. 每个entry都是IntersectionObserverEntry对象
-       2. 通过判断对象的intersectionRatio交叉率来判断显示，完全可见为1，完全不可见为0，
+       2. 通过判断对象的intersectionRatio交叉率来判断显示，完全可见为1，完全不可见为0
+       3. 触发时机，threshold属性决定了什么时候触发回调函数。它是一个数组，每个成员都是一个门槛值，默认为[0]，即交叉比例（intersectionRatio）达到0时触发回调函数。用户可以自定义这个数组。比如，[0, 0.25, 0.5, 0.75, 1]就表示当目标元素 0%、25%、50%、75%、100% 可见时，会触发回调函数。**上边代码进行优化了**
+
+            ```
+            initIntersectionObserver () {
+                if ('IntersectionObserver' in window &&
+                'IntersectionObserverEntry' in window &&
+                'intersectionRatio' in window.IntersectionObserverEntry.prototype) {
+                this.observer = new IntersectionObserver(entries => {
+                    if (entries[0].intersectionRatio > 0.9) {
+                    this.showPurchaseBar = false
+                    } else {
+                    this.showPurchaseBar = true
+                    }
+                }, {
+                    threshold: [0.9]
+                })
+                }
+            }
+            ```
+        **这个修补了按钮被navbar挡住的时候，上下两个按钮都没有的问题**
+
     4. 简单使用
 
         ```
