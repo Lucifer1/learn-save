@@ -1033,6 +1033,15 @@
     2.  CommonJS加载的是整个模块，将所有的接口全部加载进来，ES6 Module可以单独加载其中的某个接口；
     3.  CommonJS输出是值的拷贝，ES6 Module输出的是值的引用，被输出模块的内部的改变会影响引用的改变；
     4.  CommonJS this指向当前模块，ES6 Module this指向undefined;
+86. Object.create()方法创建一个新对象，使用现有的对象来提供新创建的对象的__proto__。
+87. [es5继承与es6继承的区别](https://juejin.cn/post/7000947433588916232)
+    1. es5的构造函数可以用new也可以直接使用，es6 class必须使用new，不能直接调用
+    2. ES5的原型方法和静态方法默认是**可枚举**的，而class的默认**不可枚举**，因为，es6通过Object.defineProperty方法来设置原型方法和静态方法，而且enumerable默认为false。如果想要获取不可枚举的属性可以使用Object.getOwnPropertyNames方法
+    3. es6子类可以直接通过__proto__找到父类，而ES5是指向Function.prototype：
+        1.  ES6：Sub.__proto__ === Sup
+        2.  ES5：Sub.__proto__ === Function.prototype
+    4. ES5的继承，实质是先创造子类的实例对象this，然后再执行父类的构造函数给它添加实例方法和属性。ES6实质是先创造父类的实例对象this，然后再用子类的构造函数修改this。
+    5. class不存在变量提升，所以父类必须在子类之前定义
 
 
 

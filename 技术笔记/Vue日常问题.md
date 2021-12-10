@@ -333,3 +333,4 @@ production对应production、test对应test、其他默认都是development
         1.  load事件不触发：这个就涉及到了前段时间学的东西，缓存，因为我们每次拿到的url是一样的，浏览器第一次拿到这个url的时候会发送请求，并将请求的内容缓存，第二次碰见相同的url，则会先查询memory cache然后再找disk cache，然后才会发请求，load不触发就是因为浏览器从缓存中找到了，所以不触发
 47. vue inspect: **查看的是与vue.config.js合并之后的webpack配置**，不是项目默认的通用配置
 48. [vue.config.js](https://juejin.cn/post/6886698055685373965)
+49. [scoped](https://juejin.cn/post/6991354556349153293):每个 Vue 文件都将对应一个唯一的 id，该 id 根据文件路径名和内容 hash 生成，通过组合形成scopeId。编译 template 标签时，会为每个标签添加了当前组件的scopeId,编译 style 标签时，会根据当前组件的 scopeId 通过属性选择器和组合选择器输出样式

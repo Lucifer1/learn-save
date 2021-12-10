@@ -47,7 +47,7 @@
       1. 最开始的方案，通过watch来监听由父组件传过来的visible的变化，以此来进行打点
       2. 后来优化成了直接在mounted和destoryed里边打点，因为v-if会触发组件的挂载和destroy
    4. new Date在ios上返回 invalid Date，在ios里不支持 '-' 连接的日期，所以为了兼容ios，将日期转换为 '/' 连接的。
-     1.   var d = new Date("2017-08-11 12:00:00".replace(/-/g, "/"));
+      1. var d = new Date("2017-08-11 12:00:00".replace(/-/g, "/"));
 
 
 ### 双十一总结
