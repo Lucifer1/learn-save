@@ -25,7 +25,7 @@ Function.prototype.myBind = function(context, ...arg1) {
   context = context || window
   let fn = this
   let bindFunc = function(...arg2) {
-    let bingThis = this instanceof bindFunc ? this : context
+    let bindThis = this instanceof bindFunc ? this : context
     return fn.call(bingThis, ...arg1, ...arg2)
   }
 
