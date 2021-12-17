@@ -336,3 +336,7 @@ production对应production、test对应test、其他默认都是development
 49. [scoped](https://juejin.cn/post/6991354556349153293):每个 Vue 文件都将对应一个唯一的 id，该 id 根据文件路径名和内容 hash 生成，通过组合形成scopeId。编译 template 标签时，会为每个标签添加了当前组件的scopeId,编译 style 标签时，会根据当前组件的 scopeId 通过属性选择器和组合选择器输出样式
 50. [Vue.extend](https://www.cnblogs.com/hentai-miao/p/10271652.html)
 51. [axios拦截器原理](https://juejin.cn/post/6844904039608500237)
+52. [查看打包后各包的大小npm run build --report，会在dist里边生成一个report.html](https://blog.csdn.net/yunchong_zhao/article/details/104374295/)
+53. [vue 打包时间统计](https://blog.csdn.net/a736755244/article/details/113634393)
+54. [量化打包时间](https://www.cnblogs.com/zhurong/p/12603887.html)、[第二篇](https://segmentfault.com/a/1190000020672528)
+
