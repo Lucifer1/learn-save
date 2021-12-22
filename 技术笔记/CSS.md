@@ -640,5 +640,7 @@
     4.  overflow的值不是visible
 56. 子元素有height时，会默认继承父元素的width
 57. border在有的机型中失效了。原来是因为border 不可以用rem
+58. 内联元素距离顶部有空白，只需要把它的父元素的font-size设置为0即可，否则该内联元素的父元素会默认继承其父元素或者根元素的font-size，导致父元素的高度被撑开，所以会有空白。
+    1.  [font-size与line-height的关系](https://blog.csdn.net/weixin_43109549/article/details/100387545)
 
 

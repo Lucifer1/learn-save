@@ -339,4 +339,5 @@ production对应production、test对应test、其他默认都是development
 52. [查看打包后各包的大小npm run build --report，会在dist里边生成一个report.html](https://blog.csdn.net/yunchong_zhao/article/details/104374295/)
 53. [vue 打包时间统计](https://blog.csdn.net/a736755244/article/details/113634393)
 54. [量化打包时间](https://www.cnblogs.com/zhurong/p/12603887.html)、[第二篇](https://segmentfault.com/a/1190000020672528)
+55. [axios设置请求头失效原因](https://www.jianshu.com/p/67ca1273370f)，get请求是不允许设置请求头的，需要给get请求设置data才能设置请求头
 

@@ -283,7 +283,7 @@
 12. && 和 ||
     1.  JS中的&&和||，当出现在条件判断语句中时，例如if，会遵守C语系规则。
     2.  JS中的&&和||，当初现在赋值语句中时，例如变量赋值、return结果等，会遵循以下规则：
-        * 表达式a && 表达式b :  计算表达式a（也可以是函数）的运算结果，如果为 True, 执行表达式b（或函数），并返回b的结果；如果为 False，返回a的结果；
+        * 表达式a && 表达式b :  计算表达式a（也可以是函数）的运算结果，如果a为 True, 执行表达式b（或函数），并返回b的结果；如果为 False，返回a的结果；
         * 表达式a || 表达式b :   计算表达式a（也可以是函数）的运算结果，如果为 Fasle, 执行表达式b（或函数），并返回b的结果；如果为 True，返回a的结果
 
 13. 对象的属性名，用不用引号都可以
@@ -1046,6 +1046,24 @@
         2.  ES5：Sub.__proto__ === Function.prototype
     4. ES5的继承，实质是先创造子类的实例对象this，然后再执行父类的构造函数给它添加实例方法和属性。ES6实质是先创造父类的实例对象this，然后再用子类的构造函数修改this。
     5. class不存在变量提升，所以父类必须在子类之前定义
+    6. [import与require](https://juejin.cn/post/6844904018263670798)
+       1. requir动态态编译: 第一次加载某个模块时， Node会缓存该模块， 后续加载就从缓存中获取。
+
+                ```
+                //example.js
+                module.exports = {
+                    say: 'hi'
+                }
+
+                //main.js
+                require('./example').say = 'hello'
+                const test = require('./example').say
+                console.log(test)       //hello
+                ```
+            上面的test重新引入example， 但它的say属性还是上面的hello， 说明并没有从新加载example模块， 而是从缓存中获取的该模块， 所以say属性不是hi
+       2. import属于ES6的命令，import模块时只是生成引用， **等到需要时才去取值**， 所以不存在缓存的问题， 而且模块里的变量， 绑定其所在的模块。**import命令具有提升效果，会提升到整个模块的头部， 建议放在文件开头。**
+       3. require是运行时加载，所以import命令没有办法代替require的动态加载功能。import为了实现动态加载， 引入了import()函数， 该函数返回一个promise对象。
+       4. import操作符是静态的，import函数式动态的，require是动态的，静态是指编译时加载，动态是指执行是加载
 
 
 
