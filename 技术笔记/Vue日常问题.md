@@ -246,7 +246,7 @@
      5.   NODE_ENV属性值 一般只有 production/test/development 三种值（没有在.env.[mode]文件中配置该值的前提下）,如果在 .env.[mode] 文件中设置了 NODE_ENV值，则覆盖
 production对应production、test对应test、其他默认都是development
 26. underscore安装后不能使用，https://blog.csdn.net/qq_40314318/article/details/114284280，要在文件里边声明一下
-27. .sync
+27. [.sync](https://www.jianshu.com/p/6b062af8cf01)
 28. vue先渲染父组件再渲染子组件
 29. v-if，v-show，display:none与visibility:hidden
     1.  v-if 是在**DOM中**生成或者移除一个元素，就是DOM里边直接没有这个元素
@@ -340,4 +340,8 @@ production对应production、test对应test、其他默认都是development
 53. [vue 打包时间统计](https://blog.csdn.net/a736755244/article/details/113634393)
 54. [量化打包时间](https://www.cnblogs.com/zhurong/p/12603887.html)、[第二篇](https://segmentfault.com/a/1190000020672528)
 55. [axios设置请求头失效原因](https://www.jianshu.com/p/67ca1273370f)，get请求是不允许设置请求头的，需要给get请求设置data才能设置请求头
+56. [在axios中设置cookie失败](https://segmentfault.com/q/1010000022153368?utm_source=sf-similar-question)，出于安全考虑，AJAX中不允许设置部分请求头，其中就包括Cookie，应该通过document.cookie或者由服务端返回Set-Cookie等方式
+57. mounted不会承诺所有的子组件都会挂载
+
+    ![ref](../img/mounted&ref.png)
 

@@ -226,3 +226,11 @@
         2.  name	文件名
         3.  path	文件相对路径
         4.  folder	文件所在文件夹
+23. [查看打包后各包的大小npm run build --report，会在dist里边生成一个report.html](https://blog.csdn.net/yunchong_zhao/article/details/104374295/)
+24. [vue 打包时间统计](https://blog.csdn.net/a736755244/article/details/113634393)
+25. [量化打包时间](https://www.cnblogs.com/zhurong/p/12603887.html)、[第二篇](https://segmentfault.com/a/1190000020672528)
+26. config.optimization.delete('splitChunks')作用
+    1.  升级到vue-cli3之后，默认编译是对代码进行分割，会生成许多chunk，有利于页面加载速度。但是如果我们编译后的结果需要给第三方使用，比如前端微服务，这个时候，只提供一个js文件和css文件将更加方便也更加合理。
+    2.  [第二个](https://trangle.top/article/35/%E9%81%BF%E5%85%8D%20Vue%20CLI%203%20%E5%A4%9A%E9%A1%B5%E6%97%B6%E5%BC%95%E5%85%A5%E4%B8%8D%E9%9C%80%E8%A6%81%E7%9A%84%E4%BB%A3%E7%A0%81)
+    3.  项目里边用到这个是因为不想在pages以外生成其他的chunks，为了更清晰，如果以后需要优化打包速度的话，可以研究一下splitChunks
+27. [splitChunks](https://blog.csdn.net/weixin_34294049/article/details/97278751)

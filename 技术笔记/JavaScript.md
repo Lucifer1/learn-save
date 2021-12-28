@@ -1064,6 +1064,12 @@
        2. import属于ES6的命令，import模块时只是生成引用， **等到需要时才去取值**， 所以不存在缓存的问题， 而且模块里的变量， 绑定其所在的模块。**import命令具有提升效果，会提升到整个模块的头部， 建议放在文件开头。**
        3. require是运行时加载，所以import命令没有办法代替require的动态加载功能。import为了实现动态加载， 引入了import()函数， 该函数返回一个promise对象。
        4. import操作符是静态的，import函数式动态的，require是动态的，静态是指编译时加载，动态是指执行是加载
+88.  offsetTop
+     1.   offsetTop：元素到offsetParent顶部的距离
+     2.   offsetParent：距离元素最近的一个具有定位的祖宗元素（relative，absolute，fixed），若祖宗都不符合条件，offsetParent为body。如下图所示：获取child的offsetTop，图1的offsetParent为father，图2的offsetParent为body。
+89.  MDN上的浏览器兼容说明
+     1.   IOS上边清楚的标明了IOS的版本，直接判断即可
+     2.   Android相对复杂，它给出的是一个webview chrome内核的版本，但是这个版本是不一定的，首先不同的厂商给手机设置的webview版本可能是不一样的，其次webview chrome是可以单独升级的，所以说存在一种可能性就是低版本也有很高的内核版本，**可以使用caniuse.com上查一下大概的对应关系，并不一定准备，可以拿来参考**
 
 
 
