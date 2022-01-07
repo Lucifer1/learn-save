@@ -238,13 +238,12 @@
         }
         ```
     注意：{ immediate: true }这句话很关键
-25. vue 区分不同的环境，通过--mode来实现，配置 /.env.我们定义的环境名字/，里边配置
+25. [vue 区分不同的环境](https://juejin.cn/post/6844903839590531079)，通过--mode来实现，配置 /.env.我们定义的环境名字/，里边配置
      1.   NODE_ENV：production和development
      2.   自己定义其他的变量也可以，上边那个变量也不是一定的，是社区约定的
      3.   使用：vue-cli-service build --mode 我们定义的环境名字
      4.   当直接调用vue-cli-service build，没有设置--mode时，默认值时development
-     5.   NODE_ENV属性值 一般只有 production/test/development 三种值（没有在.env.[mode]文件中配置该值的前提下）,如果在 .env.[mode] 文件中设置了 NODE_ENV值，则覆盖
-production对应production、test对应test、其他默认都是development
+     5.   NODE_ENV属性值 一般只有 production/test/development 三种值（没有在.env.[mode]文件中配置该值的前提下）,如果在 .env.[mode] 文件中设置了 NODE_ENV值，则覆盖production对应production、test对应test、其他默认都是development
 26. underscore安装后不能使用，https://blog.csdn.net/qq_40314318/article/details/114284280，要在文件里边声明一下
 27. [.sync](https://www.jianshu.com/p/6b062af8cf01)
 28. vue先渲染父组件再渲染子组件
@@ -345,3 +344,4 @@ production对应production、test对应test、其他默认都是development
 
     ![ref](../img/mounted&ref.png)
 
+58. [vite](https://mp.weixin.qq.com/s?__biz=Mzg3OTYwMjcxMA==&mid=2247484396&idx=1&sn=a2e4620466222764601ac26627e4f4e6&chksm=cf00be95f8773783d43819804d435cc5451cc7aa8622bd7aa86065de938e4c59619b99892326&scene=178&cur_album_id=1856066636768722949#rd)
