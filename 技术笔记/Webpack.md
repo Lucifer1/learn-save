@@ -1,4 +1,106 @@
 1. [webpack原理剖析](https://mp.weixin.qq.com/s/SbJNbSVzSPSKBe2YStn2Zw)
+   1. 核心流程：核心完成了 内容转换 + 资源合并 两种功能，实现上包含三个阶段：
+      1. 初始化阶段
+         1. 初始化参数：从配置文件、配置对象和shell参数中读取，与默认配置合并生成最终配置参数
+         2. 创建编译器对象：使用上边的参数创建compiler对象
+         3. 初始化编译环境：包括注入内置插件、注册各种模块工厂、初始化 RuleSet 集合、加载配置的插件等
+         4. 开始编译：执行compiler的run方法
+         5. 确定入口：根据entry确定所有入口文件，调用compilation.addEntry将入口文件转换为dependence对象
+      2. 构建阶段：
+         1. 编译模块(make)：根据entry对应的dependence对象创建module对象，调用loader将模块转换为JS，调用JS解释器将JS内容转换为AST对象，然后递归查找该模块的所有依赖项。
+         2. 完成模块编译：完成上述操作后，得到每个module的内容和**依赖关系图**
+      3. 生成阶段：
+         1. 输出资源(seal)：根据entry和module之间的依赖关系，组装成一个个包含多个模块的chunk，再把每个chunk转换成一个单独的bundle加入到输出列表当中，**这是最后可以修改内容的机会**
+         2. 写入文件系统：将打包好的文件写到规定的文件当中
+   2. 基础概念：
+      1. Entry：编译入口，webpack 编译的起点
+      2. Compiler：编译管理器，webpack 启动后会创建 compiler 对象，该对象一直存活知道结束退出
+      3. Compilation：单次编辑过程的管理器，比如 watch = true 时，运行过程中只有一个 compiler 但每次文件变更触发重新编译时，都会创建一个新的 compilation 对象
+      4. Dependence：依赖对象，webpack 基于该类型记录模块间依赖关系
+      5. Module：webpack 内部所有资源都会以“module”对象形式存在，所有关于资源的操作、转译、合并都是以 “module” 为基本单位进行的
+      6. Chunk：编译完成准备输出时，webpack 会将 module 按特定的规则组织成一个一个的 chunk，这些 chunk 某种程度上跟最终输出一一对应
+      7. Loader：资源内容转换器，其实就是实现从内容 A 转换 B 的转换器
+      8. Plugin：webpack构建过程中，会在特定的时机广播对应的事件，插件监听这些事件，在特定时间点介入编译过程
+   3. 初始化阶段
+      1. 基本流程
+
+         ![初始化阶段基本流程图](../img/webpack/初始化基本流程.png)
+
+         1. 将`process.args + webpack.config.js`合成用户配置
+         2. 调用validateSchema校验配置
+         3. 调用`getNormalizedWebpackOptions + applyWebpackOptionsBaseDefaults` 合并出最终配置
+         4. 创建 `compiler` 对象
+         5. 遍历用户定义的 `plugins` 集合，执行插件的 `apply` 方法
+         6. 调用 `new WebpackOptionsApply().process` 方法，加载各种内置插件。主要逻辑集中在 WebpackOptionsApply 类，webpack 内置了数百个插件，这些插件并不需要我们手动配置，WebpackOptionsApply 会在初始化阶段根据配置内容动态注入对应的插件，包括：
+            1. 注入 EntryOptionPlugin 插件，处理 entry 配置
+            2. 根据 devtool 值判断后续用那个插件处理 sourcemap，可选值：EvalSourceMapDevToolPlugin、SourceMapDevToolPlugin、EvalDevToolModulePlugin
+            3. 注入 RuntimePlugin ，用于根据代码内容动态注入 webpack 运行时
+         7. 到这里，compiler 实例就被创建出来了，相应的环境参数也预设好了，紧接着开始调用 compiler.compile 函数，compile之后经过跳转调用make，进入构建阶段，这里会触发make钩子
+   4. 构建阶段
+      1. 基本流程
+
+         ![构建基本流程图](../img/webpack/构建基本流程.png)
+
+         1. 调用 `handleModuleCreate` ，根据文件类型构建 mod`ule 子类
+         2. **调用 loader-runner 仓库的 `runLoaders` 转译 module 内容，通常是从各类资源类型转译为 JavaScript 文本**
+         3. **调用 acorn 将 JS 文本解析为AST**
+         4. 遍历 AST，触发各种钩子
+            1. 在 `HarmonyExportDependencyParserPlugin` 插件监听 `exportImportSpecifier` 钩子，解读 JS 文本对应的资源依赖
+            2. 调用 `module` 对象的 `addDependency` 将依赖对象加入到 `module` 依赖列表中
+         5. AST 遍历完毕后，调用 `module.handleParseResult` 处理模块依赖
+         6. 对于 `module` 新增的依赖，调用 `handleModuleCreate` ，控制流回到第一步
+         7. 所有依赖都解析完毕后，构建阶段结束
+      2. 流程解释
+         1. **这个过程中数据流 `module => ast => dependences => module` ，先转 AST 再从 AST 找依赖。这就要求 `loaders` 处理完的最后结果必须是可以被 acorn 处理的标准 JavaScript 语法**
+   5. 生成阶段
+      1. 基本流程：构建阶段围绕 module 展开，生成阶段则围绕 chunks 展开。经过构建阶段之后，webpack 得到足够的模块内容与模块关系信息，接下来开始生成最终资源了。代码层面，就是开始执行 compilation.seal 函数，seal 原意密封、上锁，我个人理解在 webpack 语境下接近于 “将模块装进蜜罐” 。seal 函数主要完成从 module 到 chunks 的转化，核心流程：
+
+         ![生成阶段基本流程图](../img/webpack/生成阶段基本流程.png)
+
+         1. 构建本次编译的 `ChunkGraph` 对象；
+         2. 遍历 `compilation.modules` 集合，将 `module` 按 `entry/动态引入` 的规则分配给不同的 `Chunk` 对象；
+         3. `compilation.modules` 集合遍历完毕后，得到完整的 `chunks` 集合对象，调用 `createXxxAssets` 方法
+         4. `createXxxAssets` 遍历 `module/chunk` ，调用 `compilation.emitAssets` 方法将 `assets` 信息记录到 `compilation.assets` 对象中
+         5. 触发 `seal` 回调，控制流回到 `compiler` 对象
+            1. chunk规则：
+               1. entry 及 entry 触达到的模块，组合成一个 chunk
+               2. 使用动态引入语句引入的模块，各自组合成一个 chunk
+
+               ![chunk-1](../img/webpack/chunk/chunk-1.png)
+               ![chunk-2](../img/webpack/chunk/chunk-2.png)
+
+            2. seal 函数步骤：
+               1. 遍历 compilation.modules ，记录下模块与 chunk 关系
+               2. 触发各种模块优化钩子，这一步优化的主要是模块依赖关系
+               3. 遍历 module 构建 chunk 集合
+               4. 触发各种优化钩子
+
+               ![chunk-3](../img/webpack/chunk/chunk-3.png)
+
+      2. SplitChunksPlugin 的作用
+         1. 在seal过程当中，第4个步骤触发 `optimizeChunks` 钩子，这个时候已经跑完主流程的逻辑，得到 chunks 集合，SplitChunksPlugin 正是使用这个钩子，分析 chunks 集合的内容，按配置规则增加一些通用的 chunk ：
+   6. 资源形态流转
+
+      ![资源形态流转图](../img/webpack/资源形态流转图.png)
+
+      1. compiler.make 阶段：
+         1. entry 文件以 dependence 对象形式加入 compilation 的依赖列表，dependence 对象记录有 entry 的类型、路径等信息
+         2. 根据 dependence 调用对应的工厂函数创建 module 对象，之后读入 module 对应的文件内容，调用 loader-runner 对内容做转化，转化结果若有其它依赖则继续读入依赖资源，重复此过程直到所有依赖均被转化为 module
+      2. compilation.seal 阶段：
+         1. 遍历 module 集合，根据 entry 配置及引入资源的方式，将 module 分配到不同的 chunk
+         2. 遍历 chunk 集合，调用 compilation.emitAsset 方法标记 chunk 的输出规则，即转化为 assets 集合
+      3. compiler.emitAssets 阶段：
+         1. 将 assets 写入文件系统
+   7. 钩子触发时机
+      1. compiler
+
+         ![compiler钩子触发顺序](../img/webpack/compiler钩子触发顺序.png)
+
+      2. compilation
+
+         ![compilation触发顺序](../img/webpack/compilation触发顺序.png)
+
+
 2. [acorn](https://zhuanlan.zhihu.com/p/149323563)
    1. 定义：A tiny, fast JavaScript parser, written completely in JavaScript. 一个完全使用javascript实现的，小型且快速的javascript解析器。**acorn可以完成javascript代码解析工作，这个代码解析工作的产出即ast（抽象语法树）**
    2.
