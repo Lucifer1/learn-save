@@ -41,7 +41,7 @@
 
          ![构建基本流程图](../img/webpack/构建基本流程.png)
 
-         1. 调用 `handleModuleCreate` ，根据文件类型构建 mod`ule 子类
+         1. 调用 `handleModuleCreate` ，根据文件类型构建 `module` 子类
          2. **调用 loader-runner 仓库的 `runLoaders` 转译 module 内容，通常是从各类资源类型转译为 JavaScript 文本**
          3. **调用 acorn 将 JS 文本解析为AST**
          4. 遍历 AST，触发各种钩子
