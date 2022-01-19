@@ -201,3 +201,4 @@
 
 4. [移动端、响应式、物理像素、逻辑像素、devicePixelRatio](https://juejin.cn/post/6847902217727377416)
 5. **我们写的 px * scale = dip = 物理像素 / devicePixelRatio**，所谓1px问题就是想让物理像素为1，所以当devicePixelRatio为2时，我们要做的就是让1px = 0.5 dip，那么物理像素就是1px，所以就把scale设置为0.5，那么1px = 0.5 dip = 1物理像素。
+6. [<% %>](https://www.cnblogs.com/asdyzh/p/9742047.html)
