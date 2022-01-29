@@ -347,3 +347,4 @@
 58. [vite](https://mp.weixin.qq.com/s?__biz=Mzg3OTYwMjcxMA==&mid=2247484396&idx=1&sn=a2e4620466222764601ac26627e4f4e6&chksm=cf00be95f8773783d43819804d435cc5451cc7aa8622bd7aa86065de938e4c59619b99892326&scene=178&cur_album_id=1856066636768722949#rd)
 59. productionSourceMap
     1.  当这个值设置为false时，vue-cli是不会给test环境添加sourceMap的，需要我们手动添加devtool，具体代码可以看@vue/cli-service/lib/config/prod.js里边的默认值
+60. vue-cli [插件和 Preset](https://cli.vuejs.org/zh/guide/plugins-and-presets.html)

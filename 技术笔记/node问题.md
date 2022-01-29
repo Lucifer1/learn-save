@@ -42,3 +42,4 @@
 8. qps
 9. 写后台一定要注意稳定性和可维护性
 10. [ndb调试](https://zhuanlan.zhihu.com/p/41315709)
+11. [child_process.spawn](https://www.runoob.com/nodejs/nodejs-process.html) 使用指定的命令行参数创建新进程，child_process.spawn(command\[, args\]\[, options\])
