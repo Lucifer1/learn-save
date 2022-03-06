@@ -643,6 +643,6 @@
 58. 内联元素距离顶部有空白，只需要把它的父元素的font-size设置为0即可，否则该内联元素的父元素会默认继承其父元素或者根元素的font-size，导致父元素的高度被撑开，所以会有空白。
     1.  [font-size与line-height的关系](https://blog.csdn.net/weixin_43109549/article/details/100387545)
 59. 字体小于12px， css transform: scale(0.5)
-60. 当margin padding 赋值为%百分比的时候，是按父元素的width为参照物
+60. **当margin padding 赋值为%百分比的时候，是按父元素的width为参照物**
 
 

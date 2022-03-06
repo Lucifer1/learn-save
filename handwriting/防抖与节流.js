@@ -9,7 +9,7 @@ function debounce(fn, time) {
 }
 
 function throttle(fn, time) {
-  let timer
+  let timer1
   return function() {
     if(timer) return
     timer = setTimeout(() => {
@@ -18,3 +18,10 @@ function throttle(fn, time) {
     }, time)
   }
 }
+
+function add (a, b) {
+  return a + b
+}
+
+
+

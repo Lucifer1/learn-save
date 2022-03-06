@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    Object.prototype.getName = function () { console.log('我是object的prototype');}
+
+    function myNew(fn, ...arg) {
+      console.log('>>>', 'fn', fn);
+      let obj = {}
+      obj.__proto__ = fn.prototype
+      let res = fn.call(obj, ...arg)
+      return typeof res === Object ? res : obj
+    }
+
+    function create(Con, ...args) {
+      console.log('>>>', 'fn', Con);
+      // 创建一个空的对象
+      let obj = Object.create(null);
+      // 将空对象指向构造函数的原型链
+      Object.setPrototypeOf(obj, Con.prototype);
+      // obj绑定到构造函数上，便可以访问构造函数中的属性，即obj.Con(args)
+      let result = Con.apply(obj, args);
+      // 如果返回的result是一个对象则返回
+      // new方法失效，否则返回obj
+      return result instanceof Object ? result : obj;
+    }
+
+    function foo() {
+      getName = function () { console.log(1); };
+      return this;
+    }
+    foo.getName = function () { console.log(2); };
+    foo.prototype.getName = function () { console.log(3); };
+    var getName = function () { console.log(4); };
+    function getName() { console.log(5); }
+
+    var test = new foo()
+    console.log('test', new test.getName() instanceof test.getName);
+
+    foo.getName();                // ?  2
+    getName();                    // ?  4
+    foo().getName();              // ?  1
+    getName();                    // ?  1
+    new foo.getName();            // ?  2
+    new foo().getName();          // ?  3
+    new new foo().getName();      // ?  3
+
+    create(foo().getName)
+  </script>
+</body>
+</html>

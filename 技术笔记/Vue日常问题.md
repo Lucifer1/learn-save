@@ -87,6 +87,8 @@
         http://oursite.com/user/id
         ```
 
+        ip/user/id 404
+
         在此情况下重新（刷新F5）向后端发送请求，如后端没有配置对应/user/id的路由处理，则会返回404错误。
 
     1.  hash模式，path加到#/后边?前边
