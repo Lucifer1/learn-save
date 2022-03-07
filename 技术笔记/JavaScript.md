@@ -532,7 +532,7 @@
 
 37. [JS中的四种循环](https://juejin.cn/post/6844903513336610823)
     1.  for
-    2.  for-in： for-in 并不适合用来遍历 Array 中的元素，其更适合遍历对象中的属性，这也是其被创造出来的初衷。**for-in 不仅仅遍历 array 自身的属性，其还遍历 array 原型链上的所有可枚举的属性**
+    2.  for-in： for-in 并不适合用来遍历 Array 中的元素，其更适合遍历对象中的属性，这也是其被创造出来的初衷。**for-in 不仅仅遍历 array 自身的属性，其还遍历 array 原型链上的所有可枚举的属性**，**for-in拿到的index是string**
 
             ```
             Array.prototype.fatherName = "Father";

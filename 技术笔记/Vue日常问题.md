@@ -350,3 +350,5 @@
 59. productionSourceMap
     1.  当这个值设置为false时，vue-cli是不会给test环境添加sourceMap的，需要我们手动添加devtool，具体代码可以看@vue/cli-service/lib/config/prod.js里边的默认值
 60. vue-cli [插件和 Preset](https://cli.vuejs.org/zh/guide/plugins-and-presets.html)
+61. created、mounted、computed执行顺序
+    1.  页面加载时，触发的顺序是：created => computed c => mounted，[原理](https://blog.csdn.net/tangran0526/article/details/118525382)
