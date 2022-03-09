@@ -53,7 +53,7 @@
 
        4.  vite创建项目方法？ **看官网**
        5.  vite不打包，在浏览器中显示的文件类型也是xx.vue的格式，浏览器是怎么识别的？
-           1.  vite会对.vue文件进行编译，编译成js文件，浏览器收到的response里边，.vue文件的content-type是application/javascript，**虽然浏览器收到的还是.vue文件，但是会当成js来处理，浏览器中认的不是后缀名，认的是文件类型**
+           1.  vite会对.vue文件进行编译，编译成js文件，浏览器收到的response里边，.vue文件的content-type是application/javascript，**虽然浏器收到的还是.vue文件，但是会当成js来处理，浏览器中认的不是后缀名，认的是文件类型**
 
                 ![vite编译后的vue文件](../img/webpack/vite编译后的vue文件.png)
 
