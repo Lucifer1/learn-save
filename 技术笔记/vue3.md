@@ -4,7 +4,7 @@
    3. reactive()
    4. toRef(obj, 'obj.property')
    5. toRefs(obj)
-2. teleport
+2. [teleport](https://v3.cn.vuejs.org/guide/teleport.html)
 3. fragments
    1. vue2中我们只能有1个根，vue3中我们可以有多个根节点，这是由于fragments的功劳，**具体原因没说，以后可以看看**
 
@@ -68,3 +68,64 @@
        7.  在vue2的项目中使用vite，需要使用一个插件vite-plugin-vue2
            1.  在vite当中，用户想使用哪种框架来开发，需要在vite.config.js里边以插件的形式来使用，@vitejs/plugin-vue默认使用vue3，所以需要使用上边的框架
        8.  **具体的webpack配置如何迁移，直接去vite官网上查找**
+
+
+### 看文档总结
+
+1. [provide/inject](https://v3.cn.vuejs.org/guide/component-provide-inject.html)
+   1. provide/inject 绑定并不是响应式的。我们可以通过传递一个 ref property 或 reactive 对象给 provide 来改变这种行为，也可以使用computed属性来实现
+2. 组合式API
+   1. [3.2的新更新](https://juejin.cn/post/7036389587991658533)
+   2. 在 setup 中你应该避免使用 this，因为它不会找到组件实例。
+   3. setup 的调用发生在 data property、computed property 或 methods 被解析之前，所以它们无法在 setup 中被获取。
+   4. setup 选项是一个接收 props 和 context 的函数
+      1. props 是响应式的，不能使用 ES6 解构，它会消除 prop 的响应性。需要解构 prop，可以在 setup 函数中使用 toRefs 函数来完成此操作
+      2. context 是一个普通的 JavaScript 对象，也就是说，它不是响应式的，这意味着你可以安全地对 context 使用 ES6 解构。
+
+          ```
+          setup(props, context) {
+            // Attribute (非响应式对象，等同于 $attrs)
+            console.log(context.attrs)
+
+            // 插槽 (非响应式对象，等同于 $slots)
+            console.log(context.slots)
+
+            // 触发事件 (方法，等同于 $emit)
+            console.log(context.emit)
+
+            // 暴露公共 property (函数)
+            console.log(context.expose)
+          }
+          ```
+
+   5. 执行 setup 时，你只能访问以下 property：
+      1. props
+      2. attrs
+      3. slots
+      4. emit
+   6. 无法访问以下组件选项：
+      1. data
+      2. computed
+      3. methods
+      4. refs (模板 ref)
+   7. setup 返回的 refs 在模板中访问时是被自动浅解包的，因此不应在模板中使用 .value。但是在setup当中，修改对应的值时，需要修改.value
+   8. [setup中的生命周期](https://v3.cn.vuejs.org/guide/composition-api-lifecycle-hooks.html)
+   9. **setup的执行时机在beforeCreate与created之前**
+   10. [defineComponent](https://juejin.cn/post/6994617648596123679):defineComponent 本身的功能很简单，但是最主要的功能是为了 ts 下的类型推导
+   11. [script setup](https://juejin.cn/post/6983626263327932429)
+
+### 开发问题
+
+1. vue文件里边import vue 和 vuex 时，vetur报错，解决 Vue3 Cannot find module[解决办法](https://juejin.cn/post/6933140574132404237)，在shims-vue.d.ts里添加
+
+    ```
+    declare module '*.vue' {
+      import { ComponentOptions } from 'vue'
+      const componentOptions: ComponentOptions
+      export default componentOptions
+    }
+    ```
+
+2. [使用vue-router里的route和router](https://www.jianshu.com/p/ca0615a8ce08)
+3. [ref语法糖](https://iiong.com/vue3-second-submission-of-ref-syntactic-sugar-experience/)
+4. vue3 ['no-unused-vars'问题](https://segmentfault.com/q/1010000040813116)
