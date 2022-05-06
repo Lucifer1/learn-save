@@ -366,6 +366,7 @@ $ git log --graph --pretty=oneline --abbrev-commit
     5.  然后将该文件夹与远程仓库关联
     6.  最后git pull拉去文件，
     7.  **而不是直接git clone**
+29. 把自己分支合到master分支上，提示no change，使用[git merge --no-ff](https: //juejin.cn/post/6844904013326991368)
 
 
 

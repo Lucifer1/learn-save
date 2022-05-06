@@ -1,0 +1,54 @@
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import { setTitle } from '@solar/webview'
+import CommonFrog from '@solar/vue-frog'
+import store from '@/store/<%- fileName %>'
+import App from './App.vue'
+
+Vue.config.productionTip = false
+
+Vue.use(VueRouter)
+Vue.use(CommonFrog, {
+  config: {
+    pageName: 'pageName'
+  }
+})
+
+const router = new VueRouter({
+  routes: [
+    {
+      path: '/',
+      name: 'index',
+      component: App,
+      meta: { title: 'App' }
+    }
+  ]
+})
+
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title
+  setTitle(to.meta.title)
+  next()
+})
+
+const render = async () => {
+  if (process.env.VUE_APP_CONFIG === 'test') {
+    const VConsoleModule = await import(/* webpackChunkName: "vconsole" */'vconsole')
+    const VConsole = VConsoleModule.default
+    // eslint-disable-next-line no-new
+    new VConsole()
+  }
+
+  // eslint-disable-next-line no-new
+  window.VUE_APP = new Vue({
+    el: '#app',
+    router,
+    store,
+    data () {
+      return {}
+    },
+    render: h => h(App)
+  })
+}
+
+render()

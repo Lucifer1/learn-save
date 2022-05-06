@@ -1,0 +1,16 @@
+import request from './request'
+import { IData } from '@/types/<%- fileName %>'
+import mockCreator from '@/mock'
+import Config from '@/config'
+
+const dataPromise = import('@/mock/<%- fileName %>')
+const ENABLE_MOCK = true
+
+const mock = mockCreator(dataPromise, ENABLE_MOCK, ['dev', 'test'])
+
+export default class <%- fileName %> {
+  // @mock('getData')
+  static getData (): Promise<any> {
+    return request.get('url').then(res => res.data)
+  }
+}

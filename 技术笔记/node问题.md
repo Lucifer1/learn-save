@@ -44,3 +44,4 @@
 10. [ndb调试](https://zhuanlan.zhihu.com/p/41315709)
 11. [child_process.spawn](https://www.runoob.com/nodejs/nodejs-process.html) 使用指定的命令行参数创建新进程，child_process.spawn(command\[, args\]\[, options\])
 12. [node爬虫](https://www.jianshu.com/p/0de5a6e53482)
+13. 获取当前目录的根路径，process.cwd()

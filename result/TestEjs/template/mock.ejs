@@ -1,0 +1,13 @@
+/* eslint-disable */
+
+export const data = {
+  data: 'data'
+}
+
+export const getData = (a: any) => {
+  return new Promise(resolve => {
+      setTimeout(() => {
+      resolve(data)
+    }, 50)
+  })
+}
